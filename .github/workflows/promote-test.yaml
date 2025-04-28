@@ -1,4 +1,4 @@
-name: Promote Image to Test
+name: cas-adapter:Promote Image to Test
 
 on:
   workflow_dispatch:

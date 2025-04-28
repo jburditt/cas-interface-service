@@ -1,4 +1,4 @@
-name: Promote Image to Prod
+name: cas-adapter:Promote Image to Prod
 
 on:
   workflow_dispatch:
