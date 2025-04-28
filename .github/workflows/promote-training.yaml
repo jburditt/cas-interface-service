@@ -1,0 +1,32 @@
+name: cas-adapter:Promote Image to Prod
+
+on:
+  workflow_dispatch:
+
+env:
+  OPENSHIFT_REGISTRY: ${{ secrets.OPENSHIFT_REGISTRY }}
+  OPENSHIFT_URL: ${{ secrets.OPENSHIFT_URL }}
+  OPENSHIFT_NAMESPACE: ${{ secrets.OPENSHIFT_NAMESPACE }}
+  IMAGE_NAME: ${{ vars.IMAGE_NAME }}
+  BUILD_TAG: test
+  TARGET_TAG: training
+
+jobs:
+  promote-to-prod:
+    name: Promote Test to Prod
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install oc CLI
+        uses: redhat-actions/oc-installer@v1
+
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_URL }}
+          openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+
+      - name: Promote Image from latest to prod
+        run: |
+          oc tag $OPENSHIFT_NAMESPACE/$IMAGE_NAME:$BUILD_TAG $OPENSHIFT_NAMESPACE/$IMAGE_NAME:$TARGET_TAG
