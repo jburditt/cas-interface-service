@@ -1,4 +1,4 @@
-name: cas-adapter:Promote Image to Prod
+name: cas-adapter:Promote Image to Training
 
 on:
   workflow_dispatch:
@@ -13,7 +13,7 @@ env:
 
 jobs:
   promote-to-prod:
-    name: Promote Test to Prod
+    name: Promote Test to Training
     runs-on: ubuntu-latest
 
     steps:
