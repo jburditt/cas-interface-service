@@ -12,11 +12,19 @@ env:
   TARGET_TAG: dev
 
 jobs:
-  build-push-promote-dev:
-    name: Build, Push to Latest, and Tag Dev
+  promote-to-prod:
+    name: Promote Latest to Dev
     runs-on: ubuntu-latest
 
     steps:
+      - name: Debug - Print Important Env Variables
+        run: |
+          echo " Registry: $OPENSHIFT_REGISTRY"
+          echo " Namespace: $OPENSHIFT_NAMESPACE"
+          echo " Image Name: $IMAGE_NAME"
+          echo " Build Tag: $BUILD_TAG"
+          echo " Target Tag: $TARGET_TAG"
+
       - name: Checkout Source Code
         uses: actions/checkout@v4
 
