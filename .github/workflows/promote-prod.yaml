@@ -24,9 +24,8 @@ jobs:
         uses: redhat-actions/oc-login@v1
         with:
           openshift_server_url: ${{ env.OPENSHIFT_URL }}
+          openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
-          username: ${{ secrets.OPENSHIFT_USERNAME }}
-          password: ${{ secrets.OPENSHIFT_PASSWORD }}
 
       - name: Promote Image from latest to prod
         run: |
