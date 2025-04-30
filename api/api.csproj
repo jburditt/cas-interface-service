@@ -50,6 +50,7 @@
     <Using Include="Serilog.Formatting.Compact" />
     <Using Include="System" />
     <Using Include="System.Linq" />
+    <Using Include="System.Net" />
     <Using Include="System.Net.Http" />
     <Using Include="System.Reflection" />
     <Using Include="System.Security.Claims" />
