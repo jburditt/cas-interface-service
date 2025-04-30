@@ -44,6 +44,8 @@
     <Using Include="Microsoft.Extensions.Options" />
     <Using Include="Microsoft.Extensions.Primitives" />
     <Using Include="Microsoft.IdentityModel.Tokens" />
+    <Using Include="Newtonsoft.Json" />
+    <Using Include="Newtonsoft.Json.Linq" />
     <Using Include="Model.Settings" />
     <Using Include="Serilog" />
     <Using Include="Serilog.Events" />
@@ -52,6 +54,7 @@
     <Using Include="System.Linq" />
     <Using Include="System.Net" />
     <Using Include="System.Net.Http" />
+    <Using Include="System.Net.Http.Headers" />
     <Using Include="System.Reflection" />
     <Using Include="System.Security.Claims" />
     <Using Include="System.Threading.Tasks" />
