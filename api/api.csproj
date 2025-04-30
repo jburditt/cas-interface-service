@@ -46,6 +46,7 @@
     <Using Include="Microsoft.IdentityModel.Tokens" />
     <Using Include="Newtonsoft.Json" />
     <Using Include="Newtonsoft.Json.Linq" />
+    <Using Include="Model" />
     <Using Include="Model.Settings" />
     <Using Include="Serilog" />
     <Using Include="Serilog.Events" />
