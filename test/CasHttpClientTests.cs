@@ -3,7 +3,7 @@
     [Fact]
     public async Task Get_Token_Success()
     {
-        casHttpClient.Initialize(appSettings.Client);
+        casHttpClient.Initialize(appSettings.Client, appSettings.IsProduction);
 
         var statusCode = await casHttpClient.GetToken();
 

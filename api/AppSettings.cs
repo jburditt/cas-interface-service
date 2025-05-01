@@ -7,6 +7,8 @@ public class AppSettings
     public readonly IWebHostEnvironment Environment;
     public readonly Auth Auth;
     public readonly Model.Settings.Client Client;
+    public bool IsProduction => Environment.IsProduction();
+    public bool IsDevelopment => Environment.IsDevelopment();
 
     public AppSettings(IConfiguration configuration, IWebHostEnvironment environment)
     {

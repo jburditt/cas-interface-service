@@ -2,7 +2,7 @@
 
 public interface ICasHttpClient
 {
-    void Initialize(Model.Settings.Client settings);
+    void Initialize(Model.Settings.Client settings, bool isProduction);
     Task<HttpStatusCode> GetToken();
     Task<Response> Get(string url);
     Task<Response> Post(string url, string payload);

@@ -48,11 +48,14 @@
             }
         };
 
-        casHttpClient.Initialize(appSettings.Client);
+        casHttpClient.Initialize(appSettings.Client, appSettings.IsProduction);
         var response = await casHttpClient.CreateInvoice(invoices);
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        // successful from Postman DEV
+        //{ "invoice_number":"INV-2025-026103","CAS-Returned-Messages":"SUCCEEDED"}
 
         // successful JSON from cas-interface-service logs from Victim Services DEV
         //04/10/2025 08:30:26 JSON: {"operatingUnit":null,"invoiceType":"Standard","poNumber":null,"supplierName":null,"supplierNumber":"2000428","supplierSiteNumber":"001","invoiceDate":"09-Apr-2025","invoiceNumber":"INV-2025-087279","invoiceAmount":1000.00,"payGroup":"GEN CHQ","dateInvoiceReceived":"09-Apr-2025","dateGoodsReceived":"","remittanceCode":"01","specialHandling":"N","bankNumber":null,"branchNumber":null,"accountNumber":null,"eftAdviceFlag":null,"eftEmailAddress":null,"nameLine1":"Amanda Khalid","nameLine2":"","addressLine1":"16 High Street","addressLine2":"","addressLine3":"","city":"Coquitlam","country":"CA","province":"BC","postalCode":"V8V6V5","qualifiedReceiver":"CVAP Service Account","terms":"Immediate","payAloneFlag":"Y","paymentAdviceComments":"","remittanceMessage1":"21-22290-VIC-Khalid, Amanda","remittanceMessage2":"Wage Loss-Wage Loss","remittanceMessage3":"Crime Victim Assistance Program","termsDate":null,"glDate":"10-Apr-2025","invoiceBatchName":"SNBATCH","currencyCode":"CAD","invoiceLineDe...
@@ -67,8 +70,11 @@
         var supplierNumber = "2002741";
         var supplierSiteCode = "001";
 
-        casHttpClient.Initialize(appSettings.Client);
+        casHttpClient.Initialize(appSettings.Client, appSettings.IsProduction);
         await casHttpClient.GetInvoice(invoiceNumber, supplierNumber, supplierSiteCode);
+
+        // successful from Postman DEV
+        //{"invoice_number":"INV-2025-026103","invoice_status":"Never Validated","payment_status":"Not Paid","payment_number":" ","payment_date":" "}
 
         // successful JSON returned from CAS example
         //{ "invoice_number":"INV-2025-026102","invoice_status":"Validated","payment_status":"Fully Paid","payment_number":"15200000023","payment_date":"17-APR-2025"}
@@ -80,9 +86,9 @@
         //var paymentNumber = "12345678";
         //var paymentNumber = "009877676";
         var paymentNumber = "15200000023";
-        var payGroup = "ODP CHQ";
+        var payGroup = "GEN CHQ";
 
-        casHttpClient.Initialize(appSettings.Client);
+        casHttpClient.Initialize(appSettings.Client, appSettings.IsProduction);
         await casHttpClient.GetPayment(paymentNumber, payGroup);
 
         // successful JSON returned from CAS example
