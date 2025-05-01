@@ -190,6 +190,17 @@ public class CasHttpClient(ILogger<CasHttpClient> logger) : ICasHttpClient
             return new("Internal Error: " + e.Message, HttpStatusCode.InternalServerError);
         }
     }
+
+    public async Task<Response> GetSupplierByLastNameAndSin(string lastName, string sin)
+    {
+        if (string.IsNullOrEmpty(lastName) || string.IsNullOrEmpty(sin))
+        {
+            return new Response("Last Name and SIN are required.", HttpStatusCode.BadRequest);
+        }
+
+        var url = $"{_supplierBaseUrl}{lastName}/lastname/{sin}/sin";
+        return await Get(url);
+    }
 }
 
 public record Response(string Content, HttpStatusCode StatusCode);

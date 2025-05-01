@@ -146,7 +146,47 @@
 			"response": []
 		},
 		{
+			"name": "Find Supplier By Supplier Name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/api/Supplier/2002738",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"api",
+						"Supplier",
+						"2002738"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get Supplier By Number And Site Code",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/api/Supplier/2002738/site/002",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"api",
+						"Supplier",
+						"2002738",
+						"site",
+						"002"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Supplier By Last Name and SIN",
 			"request": {
 				"method": "GET",
 				"header": [],

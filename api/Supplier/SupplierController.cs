@@ -42,17 +42,12 @@ public class SupplierController : Controller
         return StatusCode((int)statusCode, new JsonResult(result).Value);
     }
 
-    //[HttpGet("supplier/{lastName}/lastname/{sin}/sin")]
-    //public async Task<IActionResult> GetBySupplierLastNameAndSin([FromRoute] string lastName, [FromRoute] string sin)
-    //{
-    //    if (string.IsNullOrEmpty(lastName) || string.IsNullOrEmpty(sin))
-    //    {
-    //        return BadRequest("Last Name and SIN are required.");
-    //    }
+    [HttpGet("{lastName}/lastname/{sin}/sin")]
+    public async Task<IActionResult> GetBySupplierLastNameAndSin([FromRoute] string lastName, [FromRoute] string sin)
+    {
+        (var result, var statusCode) = await _casHttpClient.GetSupplierByLastNameAndSin(lastName, sin);
 
-    //    (var result, var statusCode) = await _casHttpClient.GetSupplierByLastNameAndSin(lastName, sin);
-
-    //    return StatusCode((int)statusCode, new JsonResult(result).Value);
-    //}
+        return StatusCode((int)statusCode, new JsonResult(result).Value);
+    }
 }
 
