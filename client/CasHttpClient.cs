@@ -164,6 +164,15 @@ public class CasHttpClient(ILogger<CasHttpClient> logger) : ICasHttpClient
         var url = $"{_settings.BaseUrl}/cfs/suppliersearch/{supplierName}";
         return await Get(url);
     }
+
+    public async Task<Response> GetSupplierByLastNameAndSin(string lastName, string sin)
+    {
+        lastName.ThrowIfNullOrEmpty();
+        sin.ThrowIfNullOrEmpty();
+
+        var url = $"{_supplierBaseUrl}{lastName}/lastname/{sin}/sin";
+        return await Get(url);
+    }
 }
 
 public record Response(string Content, HttpStatusCode StatusCode);
