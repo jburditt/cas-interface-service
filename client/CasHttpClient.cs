@@ -193,8 +193,10 @@ public class CasHttpClient(ILogger<CasHttpClient> logger) : ICasHttpClient
 
     public async Task<Response> GetSupplierByLastNameAndSin(string lastName, string sin)
     {
-        lastName.ThrowIfNullOrEmpty();
-        sin.ThrowIfNullOrEmpty();
+        if (string.IsNullOrEmpty(lastName) || string.IsNullOrEmpty(sin))
+        {
+            return new Response("Last Name and SIN are required.", HttpStatusCode.BadRequest);
+        }
 
         var url = $"{_supplierBaseUrl}{lastName}/lastname/{sin}/sin";
         return await Get(url);
