@@ -9,11 +9,19 @@ public class CasHttpClient(ILogger<CasHttpClient> logger) : ICasHttpClient
     private string _supplierSearchBaseUrl => $"{_settings.BaseUrl}/cfs/suppliersearch/";
 
     // TODO this will be removed when "Access Token Management" ticket is completed
-    public void Initialize(Model.Settings.Client settings)
+    public void Initialize(Model.Settings.Client settings, bool isProduction)
     {
         _settings = settings;
 
-        var httpClient = new HttpClient();
+        var httpClientHandler = new HttpClientHandler();
+
+        if (!isProduction)      // Ignore certificate errors in non-production modes.  
+                                // This allows you to use OpenShift self-signed certificates for testing.
+        {
+            httpClientHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+        }
+
+        var httpClient = new HttpClient(httpClientHandler);
         httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         httpClient.BaseAddress = new Uri(settings.BaseUrl);
         httpClient.Timeout = new TimeSpan(1, 0, 0);  // 1 hour timeout 

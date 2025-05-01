@@ -7,7 +7,7 @@
     {
         var supplierNumber = "2002738";
 
-        casHttpClient.Initialize(appSettings.Client);
+        casHttpClient.Initialize(appSettings.Client, appSettings.IsProduction);
         var response = await casHttpClient.GetSupplierByNumber(supplierNumber);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -19,7 +19,7 @@
         var supplierNumber = "2002738";
         var supplierSiteCode = "002";
 
-        casHttpClient.Initialize(appSettings.Client);
+        casHttpClient.Initialize(appSettings.Client, appSettings.IsProduction);
         var response = await casHttpClient.GetSupplierByNumberAndSiteCode(supplierNumber, supplierSiteCode);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -29,7 +29,7 @@
     public async Task Find_Supplier_By_Name_Succeed()
     {
         var supplierName = "TEST";
-        casHttpClient.Initialize(appSettings.Client);
+        casHttpClient.Initialize(appSettings.Client, appSettings.IsProduction);
         var response = await casHttpClient.FindSupplierByName(supplierName);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -41,7 +41,7 @@
     {
         var lastName = "Smith";
         var sin = "120455700";
-        casHttpClient.Initialize(appSettings.Client);
+        casHttpClient.Initialize(appSettings.Client, appSettings.IsProduction);
         var response = await casHttpClient.GetSupplierByLastNameAndSin(lastName, sin);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -51,7 +51,7 @@
     public async Task Find_Supplier_By_Name_Too_Few_Chars()
     {
         var supplierName = "TES";
-        casHttpClient.Initialize(appSettings.Client);
+        casHttpClient.Initialize(appSettings.Client, appSettings.IsProduction);
         var response = await casHttpClient.FindSupplierByName(supplierName);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -61,7 +61,7 @@
     public async Task Get_Supplier_By_Business_Number_Succeed()
     {
         var businessNumber = "936922087";
-        casHttpClient.Initialize(appSettings.Client);
+        casHttpClient.Initialize(appSettings.Client, appSettings.IsProduction);
         var response = await casHttpClient.GetSupplierByBusinessNumber(businessNumber);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -72,7 +72,7 @@
     {
         var supplierName = "EMPRESS CHILDCARE";
         var postalCode = "V8V 2K3";
-        casHttpClient.Initialize(appSettings.Client);
+        casHttpClient.Initialize(appSettings.Client, appSettings.IsProduction);
         var response = await casHttpClient.GetSupplierByNameAndPostalCode(supplierName, postalCode);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);

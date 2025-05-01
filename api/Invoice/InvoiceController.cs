@@ -15,7 +15,7 @@ public class InvoiceController : Controller
             throw new ArgumentNullException("Client is not configured. Check your user secrets, appsettings, and environment variables.");
         }
 
-        _casHttpClient.Initialize(appSettings.Client);
+        _casHttpClient.Initialize(appSettings.Client, appSettings.IsProduction);
     }
 
     [HttpPost]
