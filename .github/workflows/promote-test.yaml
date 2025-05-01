@@ -26,4 +26,5 @@ jobs:
           image_new_tag: ${{ env.IMAGE_PROMOTE_ENV_TAG }}
           registry: ${{ env.IMAGE_REGISTRY }}
           registry_username: ${{ secrets.OCP4_USERNAME }}
-          registry_password: ${{ secrets.OCP4_PASSWORD }}   
+          registry_password: ${{ secrets.OPENSHIFT_TOKEN }}
+          
