@@ -1,4 +1,4 @@
-name: cas-adapter:Build & Promote Image to Dev
+name: cas-adapter: Build CAS Adapter
 
 on:
   workflow_dispatch:
