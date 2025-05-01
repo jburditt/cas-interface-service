@@ -72,7 +72,10 @@ public class CasHttpClient(ILogger<CasHttpClient> logger) : ICasHttpClient
 
     public async Task<Response> CreateInvoice(Invoice invoice)
     {
-        invoice.ThrowIfNull();
+        if (invoice == null)
+        {
+            return new Response("Invoice data is required.", HttpStatusCode.BadRequest);
+        }
 
         try
         {
@@ -91,9 +94,10 @@ public class CasHttpClient(ILogger<CasHttpClient> logger) : ICasHttpClient
 
     public async Task<Response> GetInvoice(string invoiceNumber, string supplierNumber, string supplierSiteCode)
     {
-        invoiceNumber.ThrowIfNullOrEmpty();
-        supplierNumber.ThrowIfNullOrEmpty();
-        supplierSiteCode.ThrowIfNullOrEmpty();
+        if (string.IsNullOrEmpty(invoiceNumber) || string.IsNullOrEmpty(supplierNumber) || string.IsNullOrEmpty(supplierSiteCode))
+        {
+            return new Response("Invoice number, supplier number, and supplier site code are required.", HttpStatusCode.BadRequest);
+        }
 
         try
         {
@@ -126,7 +130,10 @@ public class CasHttpClient(ILogger<CasHttpClient> logger) : ICasHttpClient
 
     public async Task<Response> GetSupplierByNumber(string supplierNumber)
     {
-        supplierNumber.ThrowIfNullOrEmpty();
+        if (string.IsNullOrEmpty(supplierNumber))
+        {
+            return new Response("Supplier Number is required.", HttpStatusCode.BadRequest);
+        }
 
         try
         {
@@ -142,8 +149,10 @@ public class CasHttpClient(ILogger<CasHttpClient> logger) : ICasHttpClient
 
     public async Task<Response> GetSupplierByNumberAndSiteCode(string supplierNumber, string supplierSiteCode)
     {
-        supplierNumber.ThrowIfNullOrEmpty();
-        supplierSiteCode.ThrowIfNullOrEmpty();
+        if (string.IsNullOrEmpty(supplierNumber) || string.IsNullOrEmpty(supplierSiteCode))
+        {
+            return new Response("Supplier Number and Supplier Site Code are required.", HttpStatusCode.BadRequest);
+        }
 
         try
         {
@@ -157,12 +166,29 @@ public class CasHttpClient(ILogger<CasHttpClient> logger) : ICasHttpClient
         }
     }
 
-    public async Task<Response> GetSupplierByName(string supplierName)
+    public async Task<Response> FindSupplierByName(string supplierName)
     {
-        supplierName.ThrowIfNullOrEmpty();
-        // TODO validate at least 4 characters but first if CAS does this already
-        var url = $"{_settings.BaseUrl}/cfs/suppliersearch/{supplierName}";
-        return await Get(url);
+        if (string.IsNullOrEmpty(supplierName))
+        {
+            return new Response("Supplier Name is required.", HttpStatusCode.BadRequest);
+        }
+
+        if (supplierName.Length < 4)
+        {
+            return new Response("Supplier Name must be at least 4 characters long.", HttpStatusCode.BadRequest);
+        }
+
+        try
+        {
+
+            var url = $"{_settings.BaseUrl}/cfs/suppliersearch/{supplierName}";
+            return await Get(url);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, $"Error searching Supplier By Name, Supplier Name: {supplierName}.");
+            return new("Internal Error: " + e.Message, HttpStatusCode.InternalServerError);
+        }
     }
 }
 

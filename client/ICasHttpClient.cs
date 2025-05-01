@@ -12,5 +12,5 @@ public interface ICasHttpClient
 
     Task<Response> GetSupplierByNumber(string supplierNumber);
     Task<Response> GetSupplierByNumberAndSiteCode(string supplierNumber, string supplierSiteCode);
-    Task<Response> GetSupplierByName(string supplierName);
+    Task<Response> FindSupplierByName(string supplierName);
 }
