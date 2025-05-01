@@ -66,4 +66,15 @@
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
+
+    [Fact]
+    public async Task Get_Supplier_By_Supplier_Name_and_Postal_Code_Succeed()
+    {
+        var supplierName = "EMPRESS CHILDCARE";
+        var postalCode = "V8V 2K3";
+        casHttpClient.Initialize(appSettings.Client);
+        var response = await casHttpClient.GetSupplierByNameAndPostalCode(supplierName, postalCode);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
 }
