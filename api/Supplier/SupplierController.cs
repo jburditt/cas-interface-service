@@ -19,7 +19,7 @@ public class SupplierController : Controller
     }
 
     [HttpGet("{supplierNumber}")]
-    public async Task<IActionResult> GetBySupplierNumber([FromRoute] string supplierNumber)
+    public async Task<IActionResult> GetSupplierByNumber([FromRoute] string supplierNumber)
     {
         (var result, var statusCode) = await _casHttpClient.GetSupplierByNumber(supplierNumber);
 
@@ -27,7 +27,7 @@ public class SupplierController : Controller
     }
 
     [HttpGet("{supplierNumber}/site/{supplierSiteCode}")]
-    public async Task<IActionResult> GetBySupplierNumberAndSiteCode([FromRoute] string supplierNumber, [FromRoute] string supplierSiteCode)
+    public async Task<IActionResult> GetSupplierByNumberAndSiteCode([FromRoute] string supplierNumber, [FromRoute] string supplierSiteCode)
     {
         (var result, var statusCode) = await _casHttpClient.GetSupplierByNumberAndSiteCode(supplierNumber, supplierSiteCode);
 
@@ -35,7 +35,7 @@ public class SupplierController : Controller
     }
 
     [HttpGet("suppliersearch/{supplierName}")]
-    public async Task<IActionResult> GetBySupplierName([FromRoute] string supplierName)
+    public async Task<IActionResult> GetSupplierByName([FromRoute] string supplierName)
     {
         (var result, var statusCode) = await _casHttpClient.FindSupplierByName(supplierName);
 
@@ -43,9 +43,17 @@ public class SupplierController : Controller
     }
 
     [HttpGet("{lastName}/lastname/{sin}/sin")]
-    public async Task<IActionResult> GetBySupplierLastNameAndSin([FromRoute] string lastName, [FromRoute] string sin)
+    public async Task<IActionResult> GetSupplierByLastNameAndSin([FromRoute] string lastName, [FromRoute] string sin)
     {
         (var result, var statusCode) = await _casHttpClient.GetSupplierByLastNameAndSin(lastName, sin);
+
+        return StatusCode((int)statusCode, new JsonResult(result).Value);
+    }
+
+    [HttpGet("{businessNumber}/businessnumber")]
+    public async Task<IActionResult> GetSupplierByBusinessNumber([FromRoute] string businessNumber)
+    {
+        (var result, var statusCode) = await _casHttpClient.GetSupplierByBusinessNumber(businessNumber);
 
         return StatusCode((int)statusCode, new JsonResult(result).Value);
     }

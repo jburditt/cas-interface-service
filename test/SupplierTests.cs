@@ -56,4 +56,14 @@
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
+
+    [Fact]
+    public async Task Get_Supplier_By_Business_Number_Succeed()
+    {
+        var businessNumber = "936922087";
+        casHttpClient.Initialize(appSettings.Client);
+        var response = await casHttpClient.GetSupplierByBusinessNumber(businessNumber);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
 }
