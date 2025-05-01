@@ -53,6 +53,6 @@ jobs:
           openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
 
-      #- name: Promote Image from latest to dev
-        #run: |
-          #oc tag $OPENSHIFT_NAMESPACE/$IMAGE_NAME:$BUILD_TAG $OPENSHIFT_NAMESPACE/$IMAGE_NAME:$TARGET_TAG
+      - name: Promote Image from latest to dev
+        run: |
+          oc tag $OPENSHIFT_NAMESPACE/$IMAGE_NAME:$BUILD_TAG $OPENSHIFT_NAMESPACE/$IMAGE_NAME:$TARGET_TAG
