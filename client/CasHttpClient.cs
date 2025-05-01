@@ -6,6 +6,7 @@ public class CasHttpClient(ILogger<CasHttpClient> logger) : ICasHttpClient
     private Model.Settings.Client _settings = null;
     private string _invoiceBaseUrl => $"{_settings.BaseUrl}/cfs/apinvoice/";
     private string _supplierBaseUrl => $"{_settings.BaseUrl}/cfs/supplier/";
+    private string _supplierSearchBaseUrl => $"{_settings.BaseUrl}/cfs/suppliersearch/";
 
     // TODO this will be removed when "Access Token Management" ticket is completed
     public void Initialize(Model.Settings.Client settings)
@@ -181,7 +182,7 @@ public class CasHttpClient(ILogger<CasHttpClient> logger) : ICasHttpClient
         try
         {
 
-            var url = $"{_settings.BaseUrl}/cfs/suppliersearch/{supplierName}";
+            var url = $"{_supplierSearchBaseUrl}{supplierName}";
             return await Get(url);
         }
         catch (Exception e)
@@ -198,8 +199,17 @@ public class CasHttpClient(ILogger<CasHttpClient> logger) : ICasHttpClient
             return new Response("Last Name and SIN are required.", HttpStatusCode.BadRequest);
         }
 
-        var url = $"{_supplierBaseUrl}{lastName}/lastname/{sin}/sin";
-        return await Get(url);
+        try
+        {
+
+            var url = $"{_supplierBaseUrl}{lastName}/lastname/{sin}/sin";
+            return await Get(url);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, $"Error searching Supplier By Last Name and SIN, Last Name: {lastName}, and SIN was provided.");
+            return new("Internal Error: " + e.Message, HttpStatusCode.InternalServerError);
+        }
     }
 
     public async Task<Response> GetSupplierByBusinessNumber(string businessNumber)
@@ -209,8 +219,35 @@ public class CasHttpClient(ILogger<CasHttpClient> logger) : ICasHttpClient
             return new Response("Business Number is required.", HttpStatusCode.BadRequest);
         }
 
-        var url = $"{_supplierBaseUrl}{businessNumber}/businessnumber";
-        return await Get(url);
+        try
+        {
+            var url = $"{_supplierBaseUrl}{businessNumber}/businessnumber";
+            return await Get(url);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, $"Error searching Supplier By Business Number, Business Number: {businessNumber}.");
+            return new("Internal Error: " + e.Message, HttpStatusCode.InternalServerError);
+        }
+    }
+
+    public async Task<Response> GetSupplierByNameAndPostalCode(string supplierName, string postalCode)
+    {
+        if (string.IsNullOrEmpty(supplierName) || string.IsNullOrEmpty(postalCode))
+        {
+            return new Response("Supplier Name and Postal Code are required.", HttpStatusCode.BadRequest);
+        }
+
+        try
+        {
+            var url = $"{_settings.BaseUrl}/cfs/supplierbyname/{supplierName}/{postalCode}";
+            return await Get(url);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, $"Error searching Supplier By Supplier Name and Postal Code, Supplier Name: {supplierName}, and Postal Code: {postalCode}.");
+            return new("Internal Error: " + e.Message, HttpStatusCode.InternalServerError);
+        }
     }
 }
 
