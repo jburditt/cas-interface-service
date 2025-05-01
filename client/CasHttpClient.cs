@@ -201,6 +201,17 @@ public class CasHttpClient(ILogger<CasHttpClient> logger) : ICasHttpClient
         var url = $"{_supplierBaseUrl}{lastName}/lastname/{sin}/sin";
         return await Get(url);
     }
+
+    public async Task<Response> GetSupplierByBusinessNumber(string businessNumber)
+    {
+        if (string.IsNullOrEmpty(businessNumber))
+        {
+            return new Response("Business Number is required.", HttpStatusCode.BadRequest);
+        }
+
+        var url = $"{_supplierBaseUrl}{businessNumber}/businessnumber";
+        return await Get(url);
+    }
 }
 
 public record Response(string Content, HttpStatusCode StatusCode);
