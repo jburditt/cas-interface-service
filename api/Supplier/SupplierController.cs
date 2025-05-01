@@ -21,11 +21,6 @@ public class SupplierController : Controller
     [HttpGet("{supplierNumber}")]
     public async Task<IActionResult> GetBySupplierNumber([FromRoute] string supplierNumber)
     {
-        if (string.IsNullOrEmpty(supplierNumber))
-        {
-            return BadRequest("Supplier Number is required.");
-        }
-
         (var result, var statusCode) = await _casHttpClient.GetSupplierByNumber(supplierNumber);
 
         return StatusCode((int)statusCode, new JsonResult(result).Value);
@@ -34,14 +29,30 @@ public class SupplierController : Controller
     [HttpGet("{supplierNumber}/site/{supplierSiteCode}")]
     public async Task<IActionResult> GetBySupplierNumberAndSiteCode([FromRoute] string supplierNumber, [FromRoute] string supplierSiteCode)
     {
-        if (string.IsNullOrEmpty(supplierNumber) || string.IsNullOrEmpty(supplierSiteCode))
-        {
-            return BadRequest("Supplier Number and Supplier Site Code are required.");
-        }
-
         (var result, var statusCode) = await _casHttpClient.GetSupplierByNumberAndSiteCode(supplierNumber, supplierSiteCode);
 
         return StatusCode((int)statusCode, new JsonResult(result).Value);
     }
+
+    [HttpGet("suppliersearch/{supplierName}")]
+    public async Task<IActionResult> GetBySupplierName([FromRoute] string supplierName)
+    {
+        (var result, var statusCode) = await _casHttpClient.FindSupplierByName(supplierName);
+
+        return StatusCode((int)statusCode, new JsonResult(result).Value);
+    }
+
+    //[HttpGet("supplier/{lastName}/lastname/{sin}/sin")]
+    //public async Task<IActionResult> GetBySupplierLastNameAndSin([FromRoute] string lastName, [FromRoute] string sin)
+    //{
+    //    if (string.IsNullOrEmpty(lastName) || string.IsNullOrEmpty(sin))
+    //    {
+    //        return BadRequest("Last Name and SIN are required.");
+    //    }
+
+    //    (var result, var statusCode) = await _casHttpClient.GetSupplierByLastNameAndSin(lastName, sin);
+
+    //    return StatusCode((int)statusCode, new JsonResult(result).Value);
+    //}
 }
 
