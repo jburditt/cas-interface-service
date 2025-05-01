@@ -1,4 +1,4 @@
-name: Promote to Test
+name: Promote to Prod
 
 on:
   workflow_dispatch:
