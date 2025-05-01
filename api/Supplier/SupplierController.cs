@@ -57,5 +57,13 @@ public class SupplierController : Controller
 
         return StatusCode((int)statusCode, new JsonResult(result).Value);
     }
+
+    [HttpGet("supplierbyname/{supplierName}/{postalCode}")]
+    public async Task<IActionResult> GetSupplierByNameAndPostalCode([FromRoute] string supplierName, [FromRoute] string postalCode)
+    {
+        (var result, var statusCode) = await _casHttpClient.GetSupplierByNameAndPostalCode(supplierName, postalCode);
+
+        return StatusCode((int)statusCode, new JsonResult(result).Value);
+    }
 }
 

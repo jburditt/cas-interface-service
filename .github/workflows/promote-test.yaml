@@ -1,32 +1,30 @@
-name: cas-adapter:Promote Image to Test
+name: Promote to Test
 
 on:
   workflow_dispatch:
 
 env:
-  OPENSHIFT_REGISTRY: ${{ secrets.OPENSHIFT_REGISTRY }}
-  OPENSHIFT_URL: ${{ secrets.OPENSHIFT_URL }}
-  OPENSHIFT_NAMESPACE: ${{ secrets.OPENSHIFT_NAMESPACE }}
-  IMAGE_NAME: ${{ vars.IMAGE_NAME }}
-  BUILD_TAG: dev
-  TARGET_TAG: test
+  IMAGE_NAME: cas-adapter
+  IMAGE_REGISTRY: ${{ secrets.OCP4_REGISTRY }}/${{ secrets.OCP4_NAMESPACE }}
+  IMAGE_CURRENT_ENV_TAG: latest
+  IMAGE_PROMOTE_ENV_TAG: test
+  IMAGE_PROMOTE_ENV_BACKUP_TAG: test-backup
 
 jobs:
-  promote-to-test:
-    name: Promote Dev to Test
+  promote-cas-adapter-test:
     runs-on: ubuntu-latest
+    if: github.repository_owner == 'bcgov'
 
     steps:
-      - name: Install oc CLI
-        uses: redhat-actions/oc-installer@v1
-
-      - name: Login to OpenShift
-        uses: redhat-actions/oc-login@v1
+      - uses: actions/checkout@v4
+      
+      - name: Promote cas-adapter to test
+        uses: tinact/docker.image-retag@master
         with:
-          openshift_server_url: ${{ env.OPENSHIFT_URL }}
-          openshift_token: ${{ secrets.OPENSHIFT_PIPELINE_TOKEN }}
-          insecure_skip_tls_verify: true
-
-      - name: Promote Image from latest to test
-        run: |
-          oc tag $OPENSHIFT_NAMESPACE/$IMAGE_NAME:$BUILD_TAG $OPENSHIFT_NAMESPACE/$IMAGE_NAME:$TARGET_TAG
+          image_name: ${{ env.IMAGE_NAME }}
+          image_old_tag: ${{ env.IMAGE_CURRENT_ENV_TAG }}
+          image_new_tag: ${{ env.IMAGE_PROMOTE_ENV_TAG }}
+          registry: ${{ env.IMAGE_REGISTRY }}
+          registry_username: ${{ secrets.OCP4_USERNAME }}
+          registry_password: ${{ secrets.OPENSHIFT_TOKEN }}
+          

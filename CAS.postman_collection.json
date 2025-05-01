@@ -7,14 +7,6 @@
 	},
 	"item": [
 		{
-			"name": "CASAPRetrieve",
-			"request": {
-				"method": "GET",
-				"header": []
-			},
-			"response": []
-		},
-		{
 			"name": "Get Token",
 			"request": {
 				"method": "POST",
@@ -68,7 +60,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n \"invoiceType\": \"Standard\",\r\n \"supplierNumber\": \"2000428\",\r\n \"supplierSiteNumber\": \"001\",\r\n \"invoiceDate\": \"2025-04-17\",\r\n \"invoiceNumber\": \"INV-2025-026102\",\r\n \"invoiceAmount\": 284.00,\r\n \"payGroup\": \"GEN CHQ\",\r\n \"dateInvoiceReceived\": \"2025-04-17\",\r\n //\"dateGoodsReceived\": \"\",\r\n \"remittanceCode\": \"01\",\r\n \"specialHandling\": false,\r\n \"nameLine1\": \"Ida Albert\",\r\n \"nameLine2\": \"\",\r\n \"addressLine1\": \"2671 Champions Lounge\",\r\n \"addressLine2\": \"30\",\r\n \"addressLine3\": \"Galaxy Studios\",\r\n \"city\": \"Chilliwack\",\r\n \"country\": \"CA\",\r\n \"province\": \"BC\",\r\n \"postalCode\": \"V4R9M0\",\r\n \"qualifiedReceiver\": \"systemuser\",\r\n \"terms\": \"Immediate\",\r\n \"payAloneFlag\": \"Y\",\r\n \"paymentAdviceComments\": \"\",\r\n \"remittanceMessage1\": \"21-03304-VIC-Albert, Ida\",\r\n \"remittanceMessage2\": \"Income Support-Lost Earning Capacity-Minimum Wage\",\r\n \"remittanceMessage3\": \"Crime Victim Assistance Program\",\r\n \"glDate\": \"2025-04-17\",\r\n \"invoiceBatchName\": \"SNBATCH\",\r\n \"currencyCode\": \"CAD\",\r\n \"invoiceLineDetails\": [{\r\n   \"invoiceLineNumber\": 1,\r\n   \"invoiceLineType\": \"Item\",\r\n   \"lineCode\": \"DR\",\r\n   \"invoiceLineAmount\": 284.00,\r\n   \"defaultDistributionAccount\": \"010.15004.10250.5298.1500000.000000.0000\",\r\n   \"description\": \"\",\r\n   \"taxClassificationCode\": \"\",\r\n   \"distributionSupplier\": \"\",\r\n   \"info1\": \"\",\r\n   \"info2\": \"\",\r\n   \"info3\": \"\"\r\n   }]\r\n}",
+					"raw": "{\r\n \"invoiceType\": \"Standard\",\r\n \"supplierNumber\": \"2002738\",\r\n \"supplierSiteNumber\": \"001\",\r\n \"invoiceDate\": \"2025-04-17\",\r\n \"invoiceNumber\": \"INV-2025-026102\",\r\n \"invoiceAmount\": 284.00,\r\n \"payGroup\": \"GEN CHQ\",\r\n \"dateInvoiceReceived\": \"2025-04-17\",\r\n //\"dateGoodsReceived\": \"\",\r\n \"remittanceCode\": \"01\",\r\n \"specialHandling\": false,\r\n \"nameLine1\": \"\",\r\n \"nameLine2\": \"\",\r\n \"addressLine1\": \"2671 Champions Lounge\",\r\n \"addressLine2\": \"30\",\r\n \"addressLine3\": \"Galaxy Studios\",\r\n \"city\": \"Chilliwack\",\r\n \"country\": \"CA\",\r\n \"province\": \"BC\",\r\n \"postalCode\": \"V4R9M0\",\r\n \"qualifiedReceiver\": \"systemuser\",\r\n \"terms\": \"Immediate\",\r\n \"payAloneFlag\": \"Y\",\r\n \"paymentAdviceComments\": \"\",\r\n \"remittanceMessage1\": \"21-03304-VIC-Albert, Ida\",\r\n \"remittanceMessage2\": \"Income Support-Lost Earning Capacity-Minimum Wage\",\r\n \"remittanceMessage3\": \"Crime Victim Assistance Program\",\r\n \"glDate\": \"2025-04-17\",\r\n \"invoiceBatchName\": \"EMCR Test\",\r\n \"currencyCode\": \"CAD\",\r\n \"invoiceLineDetails\": [{\r\n   \"invoiceLineNumber\": 1,\r\n   \"invoiceLineType\": \"Item\",\r\n   \"lineCode\": \"DR\",\r\n   \"invoiceLineAmount\": 284.00,\r\n   \"defaultDistributionAccount\": \"010.15004.10250.5298.1500000.000000.0000\",\r\n   \"description\": \"\",\r\n   \"taxClassificationCode\": \"\",\r\n   \"distributionSupplier\": \"\",\r\n   \"info1\": \"\",\r\n   \"info2\": \"\",\r\n   \"info3\": \"\"\r\n   }]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -151,14 +143,15 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{server}}/api/Supplier/2002738",
+					"raw": "{{server}}/api/Supplier/suppliersearch/test",
 					"host": [
 						"{{server}}"
 					],
 					"path": [
 						"api",
 						"Supplier",
-						"2002738"
+						"suppliersearch",
+						"test"
 					]
 				}
 			},
@@ -191,7 +184,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{server}}/api/Supplier/2002738/site/002",
+					"raw": "{{server}}/api/Supplier/2002738/lastname/002/sin",
 					"host": [
 						"{{server}}"
 					],
@@ -199,8 +192,50 @@
 						"api",
 						"Supplier",
 						"2002738",
-						"site",
-						"002"
+						"lastname",
+						"002",
+						"sin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Supplier By Business Number",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/api/Supplier/2002738/businessnumber",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"api",
+						"Supplier",
+						"2002738",
+						"businessnumber"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Supplier By Name and Postal Code",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/api/Supplier/supplierbyname/EMPRESS CHILDCARE/V8V 2K3",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"api",
+						"Supplier",
+						"supplierbyname",
+						"EMPRESS CHILDCARE",
+						"V8V 2K3"
 					]
 				}
 			},
