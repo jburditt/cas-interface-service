@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
 env:
-  IMAGE_NAME: dfa-portal-api
+  IMAGE_NAME: cas-adapter
   IMAGE_REGISTRY: ${{ secrets.OCP4_REGISTRY }}/${{ secrets.OCP4_NAMESPACE }}
   BUILD_TAG: latest
   TARGET_TAG: latest
