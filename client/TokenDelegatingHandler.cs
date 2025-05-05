@@ -2,7 +2,7 @@
 {
     private readonly AsyncRetryPolicy<HttpResponseMessage> _policy = Policy
             .HandleResult<HttpResponseMessage>(r => r.StatusCode is HttpStatusCode.Unauthorized or HttpStatusCode.Forbidden)
-            .RetryAsync((_, _) => tokenProvider.RefreshTokensAsync());
+            .RetryAsync((_, _) => tokenProvider.RefreshTokenAsync());
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         => await _policy.ExecuteAsync(async () =>

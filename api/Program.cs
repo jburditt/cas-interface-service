@@ -11,6 +11,7 @@ var appSettings = services.AddAppSettings(env);
 
 builder.Host.UseLogging(appSettings);
 
+services.AddCasHttpClient(env.IsProduction());
 services.AddCorsPolicy(builder.Configuration.GetSection("cors").Get<CorsSettings>());
 services.AddAuthentication(appSettings);
 services.AddAuthorization(appSettings);
@@ -19,7 +20,6 @@ services.AddLogging(appSettings);
 services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
-services.AddCasHttpClient(env.IsProduction());
 
 var app = builder.Build();
 app.MapHealthChecks();
