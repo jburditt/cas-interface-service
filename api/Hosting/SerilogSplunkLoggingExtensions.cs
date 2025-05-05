@@ -31,7 +31,7 @@ public static class SerilogSplunkLoggingExtensions
                 .ReadFrom.Configuration(appSettings.Configuration)
                 .Enrich.WithProperty("Environment", appSettings.Environment.EnvironmentName);
 
-            if (!appSettings.Environment.IsDevelopment()) 
+            if (!appSettings.Environment.IsDevelopment())
             {
                 loggerConfiguration.WriteTo.Console(formatter: new RenderedCompactJsonFormatter());
                 var splunkUrl = appSettings.Splunk.Url;
@@ -51,7 +51,13 @@ public static class SerilogSplunkLoggingExtensions
                                 ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
                             },
                             renderTemplate: false);
+
+                    Log.Information($"Logs will be forwarded to Splunk");
                 }
+            }
+            else
+            {
+                Log.Information($"Logs will not be forwarded to Splunk");
             }
         });
     }
