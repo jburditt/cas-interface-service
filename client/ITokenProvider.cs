@@ -1,5 +1,5 @@
 ﻿public interface ITokenProvider
 {
     Task<string> GetAccessTokenAsync();
-    Task<string> RefreshTokenAsync();
+    Task RefreshTokenAsync();
 }

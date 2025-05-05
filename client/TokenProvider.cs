@@ -11,7 +11,7 @@ public class TokenProvider(HttpClient httpClient, Model.Settings.Client settings
         return bearerToken;
     }
 
-    public async Task<string> RefreshTokenAsync()
+    public async Task RefreshTokenAsync()
     {
         var base64 = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(string.Format("{0}:{1}", settings.Id, settings.Secret)));
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64);
@@ -25,11 +25,10 @@ public class TokenProvider(HttpClient httpClient, Model.Settings.Client settings
         if (!response.IsSuccessStatusCode)
         {
             logger.LogError($"Error getting token: {response.StatusCode} - {response.Content}");
-            return null;
+            throw new Exception("Unable to refresh token.");
         }
         string responseBody = await response.Content.ReadAsStringAsync();
         var jo = JObject.Parse(responseBody);
         bearerToken = jo["access_token"].ToString();
-        return bearerToken;
     }
 }
