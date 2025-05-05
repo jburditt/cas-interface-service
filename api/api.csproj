@@ -43,6 +43,8 @@
     <Using Include="Newtonsoft.Json.Linq" />
     <Using Include="Model" />
     <Using Include="Model.Settings" />
+    <Using Include="Polly" />
+    <Using Include="Polly.Retry" />
     <Using Include="Serilog" />
     <Using Include="Serilog.Events" />
     <Using Include="Serilog.Formatting.Compact" />
