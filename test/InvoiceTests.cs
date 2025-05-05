@@ -81,14 +81,13 @@
     [Fact]
     public async Task Get_Payment_Succeed()
     {
-        //var paymentNumber = "12345678";
-        //var paymentNumber = "009877676";
-        var paymentNumber = "15200000023";
+        // UTEST
+        var paymentNumber = "15200000001";
         var payGroup = "GEN CHQ";
 
         await casService.GetPayment(paymentNumber, payGroup);
 
         // successful JSON returned from CAS example
-        //{ "invoice_number":"INV-2025-026102","invoice_status":"Validated","payment_status":"Fully Paid","payment_number":"15200000023","payment_date":"17-APR-2025"}
+        //{"paymentnumber":15200000001,"paygroup":"GEN CHQ","paymentdate":"02-MAY-2025 00:00:00","paymentamount":284,"paymentstatus":"NEGOTIABLE","paymentstatusdate":"02-MAY-2025 13:40:11"}
     }
 }
