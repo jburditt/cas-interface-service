@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.FileProviders;
-
-public class Startup
+﻿public class Startup
 {
     /// <summary>
     /// Register dependencies needed for xunit tests
@@ -14,8 +11,7 @@ public class Startup
             EnvironmentName = "Development",
         };
         services.AddAppSettings(fakeEnvironment);
-
-        services.AddSingleton<ICasHttpClient, CasHttpClient>();
+        services.AddCasHttpClient(fakeEnvironment.IsProduction());
     }
 
     public class FakeEnvironment : IWebHostEnvironment

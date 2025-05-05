@@ -8,10 +8,10 @@ var services = builder.Services;
 var env = builder.Environment;
 
 var appSettings = services.AddAppSettings(env);
-services.AddTransient<ICasHttpClient, CasHttpClient>();
 
 builder.Host.UseLogging(appSettings);
 
+services.AddCasHttpClient(env.IsProduction());
 services.AddCorsPolicy(builder.Configuration.GetSection("cors").Get<CorsSettings>());
 services.AddAuthentication(appSettings);
 services.AddAuthorization(appSettings);
