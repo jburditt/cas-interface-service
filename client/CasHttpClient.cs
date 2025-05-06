@@ -33,6 +33,7 @@ public static class CasHttpClientExtensions
     public static IServiceCollection AddCasHttpClient(this IServiceCollection services, bool isProduction)
     {
         services
+            .AddTransient<IgnoreSslClientHandler>()
             .AddTransient<ITokenProvider, TokenProvider>()
             .AddTransient<TokenDelegatingHandler>()
             .AddTransient<ICasService, CasService>()
