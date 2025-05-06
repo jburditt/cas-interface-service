@@ -16,7 +16,21 @@ public class CasHttpClient : ICasHttpClient
     {
         var response = await _httpClient.GetAsync(url);
         var responseContent = await response.Content.ReadAsStringAsync();
-        return new Response(responseContent, response.StatusCode);
+        var responseStatusCode = response.StatusCode;
+        // this is a hack work-around for CAS returning 404 instead of 204. When we get a 404 and json response with "code" = "NotFound", we know CAS really means a 204, the object didn't exist e.g. the invoice number didn't exist in the database
+        if (response.StatusCode == HttpStatusCode.NotFound && !string.IsNullOrEmpty(responseContent))
+        {
+            try
+            {
+                var json = JObject.Parse(responseContent);
+                if (json.ContainsKey("code") && json.GetValue("code").Value<string>() == "NotFound")
+                {
+                    responseContent = null;
+                    responseStatusCode = HttpStatusCode.NoContent;
+                }
+            } catch (Exception ex) {  }
+        }
+        return new Response(responseContent, responseStatusCode);
     }
 
     public async Task<Response> Post(string url, string payload)
