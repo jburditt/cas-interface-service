@@ -2,17 +2,10 @@
 
 public class CasHttpClient : ICasHttpClient
 {
-    private readonly HttpClient _httpClient;
-    private readonly Model.Settings.Client _settings;
+    private readonly HttpClient _httpClient = null;
 
-    public CasHttpClient(/* TODO HttpClient httpClient, */Model.Settings.Client settings)
+    public CasHttpClient(HttpClient httpClient, Model.Settings.Client settings)
     {
-        // TODO ignore ssl cert errors, remove this code after SSL cert is working on OpenShift
-        _settings = settings;
-        var httpClientHandler = new HttpClientHandler();
-        httpClientHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-        var httpClient = new HttpClient(httpClientHandler);
-
         httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         httpClient.BaseAddress = new Uri(settings.BaseUrl);
         httpClient.Timeout = new TimeSpan(1, 0, 0);  // 1 hour timeout 
@@ -21,11 +14,6 @@ public class CasHttpClient : ICasHttpClient
 
     public async Task<Response> Get(string url)
     {
-        // TODO hack until SSL cert is installed
-        var tokenProvider = new TokenProvider(_httpClient, _settings, null);
-        await tokenProvider.RefreshTokenAsync();
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await tokenProvider.GetAccessTokenAsync());
-
         var response = await _httpClient.GetAsync(url);
         var responseContent = await response.Content.ReadAsStringAsync();
         var responseStatusCode = response.StatusCode;
@@ -47,11 +35,6 @@ public class CasHttpClient : ICasHttpClient
 
     public async Task<Response> Post(string url, string payload)
     {
-        // TODO hack until SSL cert is installed
-        var tokenProvider = new TokenProvider(_httpClient, _settings, null);
-        await tokenProvider.RefreshTokenAsync();
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await tokenProvider.GetAccessTokenAsync());
-
         var postContent = new StringContent(payload);
         var response = await _httpClient.PostAsync(url, postContent);
         var responseContent = await response.Content.ReadAsStringAsync();
@@ -64,16 +47,13 @@ public static class CasHttpClientExtensions
     public static IServiceCollection AddCasHttpClient(this IServiceCollection services, bool isProduction)
     {
         services
-            // TODO uncomment after SSL cert is working in OpenShift
-            //.AddTransient<IgnoreSslClientHandler>()
-            //.AddTransient<ITokenProvider, TokenProvider>()
-            //.AddTransient<TokenDelegatingHandler>()
+            .AddTransient<IgnoreSslClientHandler>()
+            .AddTransient<ITokenProvider, TokenProvider>()
+            .AddTransient<TokenDelegatingHandler>()
             .AddTransient<ICasService, CasService>()
-            .AddTransient<ICasHttpClient, CasHttpClient>()
-            //.AddHttpClient<ICasHttpClient, CasHttpClient>()
-            //    .ConfigurePrimaryHttpMessageHandler<IgnoreSslClientHandler>()
-            //    .AddHttpMessageHandler<TokenDelegatingHandler>()
-            ;
+            .AddHttpClient<ICasHttpClient, CasHttpClient>()
+                .ConfigurePrimaryHttpMessageHandler<IgnoreSslClientHandler>()
+                .AddHttpMessageHandler<TokenDelegatingHandler>();
 
         return services;
     }
