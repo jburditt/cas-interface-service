@@ -1,6 +1,7 @@
 ﻿var builder = WebApplication.CreateBuilder(args);
 builder.WebHost
     .UseUrls()
+    .UseOpenShiftIntegration(_ => _.CertificateMountPoint = "/var/run/secrets/service-cert")
     .UseKestrel();
 
 // add services to DI container
