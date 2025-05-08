@@ -127,4 +127,14 @@ Maintenance
 
 This repository is maintained by [BC Attorney General]( https://www2.gov.bc.ca/gov/content/governments/organizational-structure/ministries-organizations/ministries/justice-attorney-general ).
 
+## Splunk
+
+The following are example Splunk queries:
+- `index=dev_emcr_dfa`
+- `index=dev_emcr_dfa Level=Error`
+
+You cannot connect to Splunk from your local machine, only in OpenShift. 
+To run Splunk locally for testing, you can run a local docker with the following command:
+`docker run -p 8000:8000 -p 8088:8088 --name splunk -e SPLUNK_START_ARGS='--accept-license' -e SPLUNK_PASSWORD='password' -e SPLUNK_HEC_TOKEN='efbb3565-5a2d-4277-80f8-9262b8362313' -e SPLUNK_HEC_SSL=false splunk/splunk:latest`
+Connect to Splunk http://localhost:8000 with admin and password supplied with the above command line.
 
