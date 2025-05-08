@@ -2,38 +2,18 @@
 
 public static class SerilogSplunkLoggingExtensions
 {
-    /// <summary>
-    /// Configures observability instruments like logging to the web application and return an initial logger
-    /// </summary>
-    /// <returns>A logger that can be used during starting up the web application</returns>
-    public static IServiceCollection AddLogging(this IServiceCollection services, AppSettings appSettings)
+    // cofigure ILogger<T> provider
+    // NOTE does not seem to change Log.Logger, use injected ILogger and not the static Log.Logger
+    public static void AddLogging(this IServiceCollection services, AppSettings appSettings)
     {
-        Serilog.Debugging.SelfLog.Enable(Console.Error);
-        CreateBootstrapLogger(appSettings);
-        var serviceName = Assembly.GetEntryAssembly()!.GetName().Name ?? throw new InvalidOperationException("Could not establish the service name");
-
-        services.AddSerilog((services, config) =>
-        {
-            config
-              .ReadFrom.Configuration(appSettings.Configuration)
-              .ReadFrom.Services(services)
-              .Enrich.WithProperty("service", serviceName);
-        });
-
-        return services;
-    }
-
-    public static void UseLogging(this ConfigureHostBuilder builder, AppSettings appSettings)
-    {
-        builder.UseSerilog((hostingContext, loggerConfiguration) =>
+        services.AddSerilog((hostingContext, loggerConfiguration) =>
         {
             loggerConfiguration
-                .ReadFrom.Configuration(appSettings.Configuration)
-                .Enrich.WithProperty("Environment", appSettings.Environment.EnvironmentName);
+               .ReadFrom.Configuration(appSettings.Configuration)
+               .Enrich.WithProperty("service", "CAS Adapter");
 
             if (!appSettings.Environment.IsDevelopment())
             {
-                loggerConfiguration.WriteTo.Console(formatter: new RenderedCompactJsonFormatter());
                 var splunkUrl = appSettings.Splunk.Url;
                 var splunkToken = appSettings.Splunk.Token;
                 if (string.IsNullOrWhiteSpace(splunkToken) || string.IsNullOrWhiteSpace(splunkUrl))
@@ -52,7 +32,7 @@ public static class SerilogSplunkLoggingExtensions
                             },
                             renderTemplate: false);
 
-                    Log.Information($"Logs will be forwarded to Splunk");
+                        Log.Information($"Logs will be forwarded to Splunk");
                 }
             }
             else
@@ -78,14 +58,15 @@ public static class SerilogSplunkLoggingExtensions
         });
     }
 
-    private static void CreateBootstrapLogger(AppSettings appSettings)
+    // add basic console logger on startup before Serilog is configured
+    public static void CreateBootstrapLogger()
     {
         Log.Logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(appSettings.Configuration)
             .WriteTo.Console()
             .CreateBootstrapLogger();
     }
 
+    // check endpoint is health check
     private static bool IsHealthCheckEndpoint(HttpContext ctx)
     {
         var endpoint = ctx.GetEndpoint();
@@ -101,6 +82,7 @@ public static class SerilogSplunkLoggingExtensions
     }
 
     // summary logs for health check requests use a Verbose level, while errors use Error and other requests use Information
+    // filter out health check requests
     private static LogEventLevel GetLevel(HttpContext ctx, double _, Exception ex) =>
         ex != null
             ? LogEventLevel.Error

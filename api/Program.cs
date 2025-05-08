@@ -1,12 +1,11 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿SerilogSplunkLoggingExtensions.CreateBootstrapLogger();
+
+var builder = WebApplication.CreateBuilder(args);
 builder.WebHost
     .UseUrls()
     .UseOpenShiftIntegration(_ => _.CertificateMountPoint = "/ssl")  
     .UseKestrel();
 
-// /var/run/secrets/service-cert
-
-// add services to DI container
 var services = builder.Services;
 var env = builder.Environment;
 
@@ -21,8 +20,6 @@ services.AddLogging(appSettings);
 services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
-
-builder.Host.UseLogging(appSettings);
 
 var app = builder.Build();
 app.MapHealthChecks();
