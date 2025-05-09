@@ -62,6 +62,59 @@
     }
 
     [Fact]
+    public async Task Send_Invoices_Cas_Transaction_Failure_Amount_Mismatch()
+    {
+        var invoices = new Invoice();
+        invoices.IsBlockSupplier = true;
+        invoices.InvoiceType = "Standard";
+        invoices.SupplierNumber = "2002741";
+        invoices.SupplierSiteNumber = 1;
+        invoices.InvoiceDate = DateTime.Now;
+        invoices.InvoiceNumber = "INV-2025-026102";
+        invoices.InvoiceAmount = 150.00m;
+        invoices.PayGroup = "GEN CHQ";
+        invoices.DateInvoiceReceived = DateTime.Now;
+        invoices.RemittanceCode = "01";
+        invoices.SpecialHandling = false;
+        invoices.NameLine1 = "Ida Albert";
+        invoices.AddressLine1 = "2671 Champions Lounge";
+        invoices.AddressLine2 = "30";
+        invoices.AddressLine3 = "Galaxy Studios";
+        invoices.City = "Chilliwack";
+        invoices.Country = "CA";
+        invoices.Province = "BC";
+        invoices.PostalCode = "V4R9M0";
+        invoices.QualifiedReceiver = "systemuser";
+        invoices.Terms = "Immediate";
+        invoices.PayAloneFlag = "Y";
+        invoices.PaymentAdviceComments = "";
+        invoices.RemittanceMessage1 = "21-03304-VIC-Albert, Ida";
+        invoices.RemittanceMessage2 = "Income Support-Lost Earning Capacity-Minimum Wage";
+        invoices.RemittanceMessage3 = "Crime Victim Assistance Program";
+        invoices.GLDate = DateTime.Now;
+        invoices.InvoiceBatchName = "SNBATCH";
+        invoices.CurrencyCode = "CAD";
+        invoices.InvoiceLineDetails = new List<InvoiceLineDetail>
+        {
+            new InvoiceLineDetail
+            {
+                InvoiceLineNumber = 1,
+                InvoiceLineType = "Item",
+                LineCode = "DR",
+                InvoiceLineAmount = 284.00m,
+                // vsd_programtyp columns vsd_clientcode.vsd_responsibilitycentre, vsd_serviceline, vsd_stob, vsd_projectcode
+                DefaultDistributionAccount = "010.15004.10250.5298.1500000.000000.0000",
+            }
+        };
+
+        var response = await casService.CreateInvoice(invoices);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        //Assert.Equal("{Response { Content = {\"invoice_number\":\"INV-2025-026102\",\"CAS-Returned-Messages\":\"[065] Batch name is already present in CFS for an organization other than that of the invoice.;[065] Batch name is already present in CFS for an organization other than that of the invoice.\"}, StatusCode = BadRequest }}", response.Content);
+    }
+
+    [Fact]
     public async Task Search_Invoice_Succeed()
     {
         // Victim Services DEV
