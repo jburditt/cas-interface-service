@@ -35,7 +35,7 @@ public class TokenProvider(HttpClient httpClient, Model.Settings.Client settings
         }
         catch (Exception ex)
         {
-            logger.LogError($"TokenProvider.RefreshTokenAsync failed: {ex.ToString()}");
+            //logger.LogError($"TokenProvider.RefreshTokenAsync failed: {ex.ToString()}");
         }
     }
 }

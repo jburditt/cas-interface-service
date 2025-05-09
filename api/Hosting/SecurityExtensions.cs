@@ -94,10 +94,8 @@ public static class SecurityExtensions
                     OnAuthenticationFailed = async ctx =>
                     {
                         await Task.CompletedTask;
-                        //var clientId = oidcConfig["clientId"];
-                        //var issuer = oidcConfig["issuer"];
-                        //var logger = ctx.HttpContext.RequestServices.GetRequiredService<ILogger<Configuration>>();
-                        //logger.LogError(ctx.Exception, $"JWT authentication failed: clientId={clientId}, issuer={issuer}, jwt:authority={options.Authority}");
+                        var logger = ctx.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
+                        logger.LogWarning("JWT authentication failed: {0}", $"jwt:authority={options.Authority}");
                     }
                 };
             })

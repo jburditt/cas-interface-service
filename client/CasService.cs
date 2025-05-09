@@ -40,10 +40,10 @@ public class CasService(ICasHttpClient _httpClient, Model.Settings.Client _setti
             var url = $"{_invoiceBaseUrl}{invoiceNumber}/{supplierNumber}/{supplierSiteCode}";
             return await _httpClient.Get(url);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            _logger.LogError(e, $"Error searching Invoice: {invoiceNumber}, Supplier Number: {supplierNumber}, Supplier Site Code: {supplierSiteCode}.");
-            return new Response(e.Message, HttpStatusCode.InternalServerError);
+            _logger.LogError(ex, $"Error searching Invoice: {invoiceNumber}, Supplier Number: {supplierNumber}, Supplier Site Code: {supplierSiteCode}.\nError Description: {ex.ToString()}");
+            return new Response(ex.Message, HttpStatusCode.InternalServerError);
         }
     }
 

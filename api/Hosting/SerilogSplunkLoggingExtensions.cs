@@ -51,10 +51,10 @@ public static class SerilogSplunkLoggingExtensions
         {
             opts.GetLevel = GetLevel;
             opts.IncludeQueryInRequestPath = true;
-            opts.EnrichDiagnosticContext = (diagCtx, httpCtx) =>
-            {
-                diagCtx.Set("User", httpCtx.User.FindFirst(ClaimTypes.Name)?.Value ?? string.Empty);
-            };
+            //opts.EnrichDiagnosticContext = (diagCtx, httpCtx) =>
+            //{
+            //    diagCtx.Set("User", httpCtx.User.FindFirst(ClaimTypes.Name)?.Value ?? string.Empty);
+            //};
         });
     }
 

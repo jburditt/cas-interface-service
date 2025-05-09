@@ -34,20 +34,20 @@
     }
 
     [Fact]
-    public async Task Get_Supplier_By_Last_Name_And_Sin_Succeed()
-    {
-        var lastName = "Smith";
-        var sin = "120455700";
-        var response = await casService.GetSupplierByLastNameAndSin(lastName, sin);
-
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-    }
-
-    [Fact]
     public async Task Find_Supplier_By_Name_Too_Few_Chars()
     {
         var supplierName = "TES";
         var response = await casService.FindSupplierByName(supplierName);
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task Get_Supplier_By_Last_Name_And_Sin_Succeed()
+    {
+        var lastName = "DFATEST";
+        var sin = "514754456";
+        var response = await casService.GetSupplierByLastNameAndSin(lastName, sin);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
