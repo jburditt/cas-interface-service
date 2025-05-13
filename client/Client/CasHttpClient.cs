@@ -3,14 +3,19 @@
 public class CasHttpClient : ICasHttpClient
 {
     private readonly HttpClient _httpClient;
+    private readonly ITokenProvider _tokenProvider;
+    private readonly IPolicyProvider _policyProvider;
     private readonly Model.Settings.Client _settings;
     private readonly ILogger<CasHttpClient> _logger;
 
-    public CasHttpClient(/* TODO HttpClient httpClient, */Model.Settings.Client settings, ILogger<CasHttpClient> logger)
+    // TODO remove tokenprovider after SSL cert is resolved and hacks are removed
+    public CasHttpClient(/* TODO HttpClient httpClient, */ITokenProvider tokenProvider, IPolicyProvider policyProvider, Model.Settings.Client settings, ILogger<CasHttpClient> logger)
     {
+        _policyProvider = policyProvider;
+        _tokenProvider = tokenProvider;
         _settings = settings;
         _logger = logger;
-
+        
         // TODO ignore ssl cert errors, remove this code after SSL cert is working on OpenShift
         var httpClientHandler = new HttpClientHandler();
         httpClientHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
@@ -22,14 +27,22 @@ public class CasHttpClient : ICasHttpClient
         _httpClient = httpClient;
     }
 
-    public async Task<Response> Get(string url)
+    public async Task<Response> Get(string url, bool isRetryEnabled = false)
     {
         // TODO hack until SSL cert is installed
-        var tokenProvider = new TokenProvider(_httpClient, _settings, null);
-        await tokenProvider.RefreshTokenAsync();
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await tokenProvider.GetAccessTokenAsync());
+        await _tokenProvider.RefreshTokenAsync();
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _tokenProvider.GetAccessTokenAsync());
 
-        var response = await _httpClient.GetAsync(url);
+        HttpResponseMessage response;
+        if (isRetryEnabled)
+        {
+            response = await _policyProvider.GetRetryPolicy().ExecuteAsync(() => _httpClient.GetAsync(url));
+        }
+        else
+        {
+            response = await _httpClient.GetAsync(url);
+        }
+
         var responseContent = await response.Content.ReadAsStringAsync();
         _logger.LogInformation("RESPONSE {0}", responseContent);
         var responseStatusCode = response.StatusCode;
@@ -49,17 +62,25 @@ public class CasHttpClient : ICasHttpClient
         return new Response(responseContent, responseStatusCode);
     }
 
-    public async Task<Response> Post(string url, string payload)
+    public async Task<Response> Post(string url, string payload, bool isRetryEnabled = false)
     {
         // TODO hack until SSL cert is installed
-        var tokenProvider = new TokenProvider(_httpClient, _settings, null);
-        await tokenProvider.RefreshTokenAsync();
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await tokenProvider.GetAccessTokenAsync());
+        await _tokenProvider.RefreshTokenAsync();
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _tokenProvider.GetAccessTokenAsync());
 
         var postContent = new StringContent(payload);
-        var response = await _httpClient.PostAsync(url, postContent);
+
+        HttpResponseMessage response;
+        if (isRetryEnabled)
+        {
+            response = await _policyProvider.GetRetryPolicy().ExecuteAsync(() => _httpClient.PostAsync(url, postContent));
+        }
+        else
+        {
+            response = await _httpClient.PostAsync(url, postContent);
+        }
+
         var responseContent = await response.Content.ReadAsStringAsync();
-        _logger.LogInformation("RESPONSE {0}", responseContent);
         return new(responseContent, response.StatusCode);
     }
 }
@@ -71,14 +92,16 @@ public static class CasHttpClientExtensions
         services
             // TODO uncomment after SSL cert is working in OpenShift
             //.AddTransient<IgnoreSslClientHandler>()
-            //.AddTransient<ITokenProvider, TokenProvider>()
+            .AddTransient<IPolicyProvider, PollyPolicyProvider>()
+            .AddTransient<ITokenProvider, TokenProvider>()
             //.AddTransient<TokenDelegatingHandler>()
             .AddTransient<ICasService, CasService>()
             .AddTransient<ICasHttpClient, CasHttpClient>()
-            //.AddHttpClient<ICasHttpClient, CasHttpClient>()
-            //    .ConfigurePrimaryHttpMessageHandler<IgnoreSslClientHandler>()
-            //    .AddHttpMessageHandler<TokenDelegatingHandler>()
-            ;
+                //.AddHttpClient<ICasHttpClient, CasHttpClient>()
+                //    .ConfigurePrimaryHttpMessageHandler<IgnoreSslClientHandler>()
+                //    .AddHttpMessageHandler<TokenDelegatingHandler>()
+                //.AddPolicyHandler(GetRetryPolicy())
+                ;
 
         return services;
     }

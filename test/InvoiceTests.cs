@@ -122,7 +122,9 @@
         var supplierNumber = "2002741";
         var supplierSiteCode = "001";
 
-        await casService.GetInvoice(invoiceNumber, supplierNumber, supplierSiteCode);
+        var response = await casService.GetInvoice(invoiceNumber, supplierNumber, supplierSiteCode);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
         // successful from Postman DEV
         //{"invoice_number":"INV-2025-026103","invoice_status":"Never Validated","payment_status":"Not Paid","payment_number":" ","payment_date":" "}

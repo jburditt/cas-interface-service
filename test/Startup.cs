@@ -12,6 +12,10 @@
         };
         services.AddAppSettings(fakeEnvironment);
         services.AddCasHttpClient(fakeEnvironment.IsProduction());
+        services.AddTransient<IPolicyProvider, PollyPolicyProvider>();
+        // TODO remove after SSL cert is enabled on OpenShift
+        services.AddHttpClient();
+        services.AddTransient<ITokenProvider, TokenProvider>();
     }
 
     public class FakeEnvironment : IWebHostEnvironment
