@@ -8,7 +8,6 @@ public class InvoiceController(ICasService casService) : Controller
     public async Task<IActionResult> Generate([FromBody] Invoice invoice)
     {
         (var result, var statusCode) = await casService.CreateInvoice(invoice);
-
         return StatusCode((int)statusCode, new JsonResult(result).Value);
     }
 

@@ -84,18 +84,21 @@ public static class SecurityExtensions
                     OnTokenValidated = async ctx =>
                     {
                         await Task.CompletedTask;
-                        //var logger = ctx.HttpContext.RequestServices.GetRequiredService<ILogger<Configuration>>();
-                        var claims = ctx.Principal.Claims;
-                        foreach (var claim in claims)
+                        var logger = ctx.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
+                        var userId = ctx.Principal.FindFirst("preferred_username").Value;
+                        using (logger.PushProperty("Security", "True"))
                         {
-                            //logger.LogInformation($"JWT token validated. Claim: {claim.Type}: {claim.Value}");
+                            logger.LogInformation($"JWT token validated. UserId: {userId}");
                         }
                     },
                     OnAuthenticationFailed = async ctx =>
                     {
                         await Task.CompletedTask;
                         var logger = ctx.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
-                        logger.LogWarning("JWT authentication failed: {0}", $"jwt:authority={options.Authority}");
+                        using (logger.PushProperty("Security", "True"))
+                        {
+                            logger.LogWarning("JWT authentication failed: {0}", $"jwt:authority={options.Authority}");
+                        }
                     }
                 };
             })
@@ -111,14 +114,20 @@ public static class SecurityExtensions
                  {
                      await Task.CompletedTask;
                      var logger = ctx.HttpContext.RequestServices.GetRequiredService<ILogger>();
-                     var userInfo = ctx.Principal?.FindFirst("userInfo");
-                     logger.LogDebug("{0}", userInfo);
+                     var userId = ctx.Principal.FindFirst("preferred_username").Value;
+                     using (logger.PushProperty("Security", "True"))
+                     {
+                         logger.LogInformation($"Introspection token validated. UserId: {userId}");
+                     }
                  },
                  OnAuthenticationFailed = async ctx =>
                  {
                      await Task.CompletedTask;
-                     //var logger = ctx.HttpContext.RequestServices.GetRequiredService<ITelemetryProvider>().Get<JwtBearerEvents>();
-                     //logger.LogError(ctx?.Result?.Failure, "Introspection authantication failed");
+                     var logger = ctx.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
+                     using (logger.PushProperty("Security", "True"))
+                     {
+                         logger.LogWarning("Introspection authentication failed: {0}", $"jwt:authority={options.Authority}");
+                     }
                  }
              };
          });
