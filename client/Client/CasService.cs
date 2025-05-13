@@ -42,7 +42,7 @@ public class CasService(ICasHttpClient _httpClient, Model.Settings.Client _setti
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"Error searching Invoice: {invoiceNumber}, Supplier Number: {supplierNumber}, Supplier Site Code: {supplierSiteCode}.\nError Description: {ex.ToString()}");
+            _logger.LogError(ex, $"Error searching invoice.");
             return new Response(ex.Message, HttpStatusCode.InternalServerError);
         }
     }
@@ -57,10 +57,10 @@ public class CasService(ICasHttpClient _httpClient, Model.Settings.Client _setti
             var url = $"{_invoiceBaseUrl}payment/{paymentNumber}/{payGroup}";
             return await _httpClient.Get(url);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            _logger.LogError(e, $"Error searching for payment, Payment Number: {paymentNumber}, Pay Group: {payGroup}.");
-            return new Response(e.Message, HttpStatusCode.InternalServerError);
+            _logger.LogError(ex, $"Error searching for payment.");
+            return new Response(ex.Message, HttpStatusCode.InternalServerError);
         }
     }
 
@@ -76,10 +76,10 @@ public class CasService(ICasHttpClient _httpClient, Model.Settings.Client _setti
             var url = $"{_supplierBaseUrl}{supplierNumber}";
             return await _httpClient.Get(url);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            _logger.LogError(e, $"Error searching Supplier By Number and Site Code, Supplier Number : {supplierNumber}.");
-            return new("Internal Error: " + e.Message, HttpStatusCode.InternalServerError);
+            _logger.LogError(ex, $"Error searching Supplier By Number.");
+            return new("Internal Error: " + ex.Message, HttpStatusCode.InternalServerError);
         }
     }
 
@@ -95,10 +95,10 @@ public class CasService(ICasHttpClient _httpClient, Model.Settings.Client _setti
             var url = $"{_supplierBaseUrl}{supplierNumber}/site/{supplierSiteCode}";
             return await _httpClient.Get(url);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            _logger.LogError(e, $"Error searching Supplier By Number and Site Code, Supplier Number : {supplierNumber}, Supplier Site Code: {supplierSiteCode}.");
-            return new("Internal Error: " + e.Message, HttpStatusCode.InternalServerError);
+            _logger.LogError(ex, $"Error searching Supplier By Number and Site Code.");
+            return new("Internal Error: " + ex.Message, HttpStatusCode.InternalServerError);
         }
     }
 
@@ -120,10 +120,10 @@ public class CasService(ICasHttpClient _httpClient, Model.Settings.Client _setti
             var url = $"{_supplierSearchBaseUrl}{supplierName}";
             return await _httpClient.Get(url);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            _logger.LogError(e, $"Error searching Supplier By Name, Supplier Name: {supplierName}.");
-            return new("Internal Error: " + e.Message, HttpStatusCode.InternalServerError);
+            _logger.LogError(ex, $"Error searching Supplier By Name.");
+            return new("Internal Error: " + ex.Message, HttpStatusCode.InternalServerError);
         }
     }
 
@@ -140,10 +140,10 @@ public class CasService(ICasHttpClient _httpClient, Model.Settings.Client _setti
             var url = $"{_supplierBaseUrl}{lastName}/lastname/{sin}/sin";
             return await _httpClient.Get(url);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            _logger.LogError(e, $"Error searching Supplier By Last Name and SIN, Last Name: {lastName}, and SIN was provided.");
-            return new("Internal Error: " + e.Message, HttpStatusCode.InternalServerError);
+            _logger.LogError(ex, $"Error searching Supplier By Last Name and SIN.");
+            return new("Internal Error: " + ex.Message, HttpStatusCode.InternalServerError);
         }
     }
 
@@ -159,10 +159,10 @@ public class CasService(ICasHttpClient _httpClient, Model.Settings.Client _setti
             var url = $"{_supplierBaseUrl}{businessNumber}/businessnumber";
             return await _httpClient.Get(url);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            _logger.LogError(e, $"Error searching Supplier By Business Number, Business Number: {businessNumber}.");
-            return new("Internal Error: " + e.Message, HttpStatusCode.InternalServerError);
+            _logger.LogError(ex, $"Error searching Supplier By Business Number.");
+            return new("Internal Error: " + ex.Message, HttpStatusCode.InternalServerError);
         }
     }
 
@@ -178,10 +178,10 @@ public class CasService(ICasHttpClient _httpClient, Model.Settings.Client _setti
             var url = $"{_settings.BaseUrl}/cfs/supplierbyname/{supplierName}/{postalCode}";
             return await _httpClient.Get(url);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            _logger.LogError(e, $"Error searching Supplier By Supplier Name and Postal Code, Supplier Name: {supplierName}, and Postal Code: {postalCode}.");
-            return new("Internal Error: " + e.Message, HttpStatusCode.InternalServerError);
+            _logger.LogError(ex, $"Error searching Supplier By Supplier Name and Postal Code.");
+            return new("Internal Error: " + ex.Message, HttpStatusCode.InternalServerError);
         }
     }
 }
