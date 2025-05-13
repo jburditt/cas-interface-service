@@ -1,6 +1,6 @@
 ﻿namespace Client;
 
-public class TokenProvider(HttpClient httpClient, Model.Settings.Client settings, ILogger<TokenProvider> logger) : ITokenProvider
+public class TokenProvider(HttpClient httpClient, IPolicyProvider policyProvider, Model.Settings.Client settings, ILogger<TokenProvider> logger) : ITokenProvider
 {
     private string bearerToken;
 
@@ -21,7 +21,6 @@ public class TokenProvider(HttpClient httpClient, Model.Settings.Client settings
             var formData = new List<KeyValuePair<string, string>>();
             formData.Add(new KeyValuePair<string, string>("grant_type", "client_credentials"));
             request.Content = new FormUrlEncodedContent(formData);
-
             var response = await httpClient.SendAsync(request);
             response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             if (!response.IsSuccessStatusCode)
@@ -35,7 +34,8 @@ public class TokenProvider(HttpClient httpClient, Model.Settings.Client settings
         }
         catch (Exception ex)
         {
-            //logger.LogError($"TokenProvider.RefreshTokenAsync failed: {ex.ToString()}");
+            logger.LogError($"TokenProvider.RefreshTokenAsync failed: {ex.ToString()}");
+            throw;
         }
     }
 }

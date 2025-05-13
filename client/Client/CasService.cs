@@ -16,7 +16,7 @@ public class CasService(ICasHttpClient _httpClient, Model.Settings.Client _setti
         try
         {
             var jsonString = invoice.ToJSONString();
-            return await _httpClient.Post(_invoiceBaseUrl, jsonString);
+            return await _httpClient.Post(_invoiceBaseUrl, jsonString, true);
         }
         catch (Exception e)
         {
