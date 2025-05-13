@@ -51,10 +51,13 @@ public static class SerilogSplunkLoggingExtensions
         {
             opts.GetLevel = GetLevel;
             opts.IncludeQueryInRequestPath = true;
-            //opts.EnrichDiagnosticContext = (diagCtx, httpCtx) =>
-            //{
-            //    diagCtx.Set("User", httpCtx.User.FindFirst(ClaimTypes.Name)?.Value ?? string.Empty);
-            //};
+            opts.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+            {
+                diagnosticContext.Set("User", httpContext.User.FindFirst("preferred_username")?.Value ?? string.Empty);
+                diagnosticContext.Set("RequestHost", httpContext.Request.Host.Value);
+                diagnosticContext.Set("RequestScheme", httpContext.Request.Scheme);
+                diagnosticContext.Set("RemoteIpAddress", httpContext.Connection.RemoteIpAddress);
+            };
         });
     }
 
@@ -91,4 +94,14 @@ public static class SerilogSplunkLoggingExtensions
                 : IsHealthCheckEndpoint(ctx) // Not an error, check if it was a health check
                     ? LogEventLevel.Verbose // Was a health check, use Verbose
                     : LogEventLevel.Information;
+
+    public static IDisposable? PushProperty(this ILogger logger, string propertyName, object value)
+    {
+        return logger.BeginScope(WrapProperty(propertyName, value));
+    }
+
+    private static IEnumerable<KeyValuePair<string, object>> WrapProperty(string propertyName, object value)
+    {
+        yield return new KeyValuePair<string, object>(propertyName, value);
+    }
 }
