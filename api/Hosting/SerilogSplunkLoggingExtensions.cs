@@ -10,7 +10,7 @@ public static class SerilogSplunkLoggingExtensions
         {
             loggerConfiguration
                .ReadFrom.Configuration(appSettings.Configuration)
-               .Enrich.WithProperty("service", "CAS Adapter");
+               .Enrich.WithProperty("app", "cas-adapter");
 
             if (!appSettings.Environment.IsDevelopment())
             {
