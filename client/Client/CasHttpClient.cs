@@ -91,17 +91,14 @@ public static class CasHttpClientExtensions
     {
         services
             // TODO uncomment after SSL cert is working in OpenShift
-            //.AddTransient<IgnoreSslClientHandler>()
             .AddTransient<IPolicyProvider, PollyPolicyProvider>()
             .AddTransient<ITokenProvider, TokenProvider>()
-            //.AddTransient<TokenDelegatingHandler>()
+            .AddTransient<TokenDelegatingHandler>()
             .AddTransient<ICasService, CasService>()
-            .AddTransient<ICasHttpClient, CasHttpClient>()
+            .AddHttpClient<ICasHttpClient, CasHttpClient>()
                 //.AddHttpClient<ICasHttpClient, CasHttpClient>()
                 //    .ConfigurePrimaryHttpMessageHandler<IgnoreSslClientHandler>()
-                //    .AddHttpMessageHandler<TokenDelegatingHandler>()
-                //.AddPolicyHandler(GetRetryPolicy())
-                ;
+                .AddHttpMessageHandler<TokenDelegatingHandler>();
 
         return services;
     }

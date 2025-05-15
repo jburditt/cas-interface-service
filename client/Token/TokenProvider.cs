@@ -13,6 +13,9 @@ public class TokenProvider(HttpClient httpClient, IPolicyProvider policyProvider
 
     public async Task RefreshTokenAsync()
     {
+        settings.Id.ThrowIfNullOrEmpty();
+        settings.Secret.ThrowIfNullOrEmpty();
+
         try
         {
             var base64 = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(string.Format("{0}:{1}", settings.Id, settings.Secret)));
