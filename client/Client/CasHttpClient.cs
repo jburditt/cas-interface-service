@@ -4,13 +4,11 @@ public class CasHttpClient : ICasHttpClient
 {
     private readonly HttpClient _httpClient;
     private readonly IPolicyProvider _policyProvider;
-    private readonly Model.Settings.Client _settings;
     private readonly ILogger<CasHttpClient> _logger;
 
     public CasHttpClient(HttpClient httpClient, IPolicyProvider policyProvider, Model.Settings.Client settings, ILogger<CasHttpClient> logger)
     {
         _policyProvider = policyProvider;
-        _settings = settings;
         _logger = logger;
         
         httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
