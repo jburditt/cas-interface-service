@@ -3,24 +3,14 @@
 public class CasHttpClient : ICasHttpClient
 {
     private readonly HttpClient _httpClient;
-    private readonly ITokenProvider _tokenProvider;
     private readonly IPolicyProvider _policyProvider;
-    private readonly Model.Settings.Client _settings;
     private readonly ILogger<CasHttpClient> _logger;
 
-    // TODO remove tokenprovider after SSL cert is resolved and hacks are removed
-    public CasHttpClient(/* TODO HttpClient httpClient, */ITokenProvider tokenProvider, IPolicyProvider policyProvider, Model.Settings.Client settings, ILogger<CasHttpClient> logger)
+    public CasHttpClient(HttpClient httpClient, IPolicyProvider policyProvider, Model.Settings.Client settings, ILogger<CasHttpClient> logger)
     {
         _policyProvider = policyProvider;
-        _tokenProvider = tokenProvider;
-        _settings = settings;
         _logger = logger;
         
-        // TODO ignore ssl cert errors, remove this code after SSL cert is working on OpenShift
-        var httpClientHandler = new HttpClientHandler();
-        httpClientHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-        var httpClient = new HttpClient(httpClientHandler);
-
         httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         httpClient.BaseAddress = new Uri(settings.BaseUrl);
         httpClient.Timeout = new TimeSpan(1, 0, 0);  // 1 hour timeout 
@@ -29,10 +19,6 @@ public class CasHttpClient : ICasHttpClient
 
     public async Task<Response> Get(string url, bool isRetryEnabled = false)
     {
-        // TODO hack until SSL cert is installed
-        await _tokenProvider.RefreshTokenAsync();
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _tokenProvider.GetAccessTokenAsync());
-
         HttpResponseMessage response;
         if (isRetryEnabled)
         {
@@ -64,10 +50,6 @@ public class CasHttpClient : ICasHttpClient
 
     public async Task<Response> Post(string url, string payload, bool isRetryEnabled = false)
     {
-        // TODO hack until SSL cert is installed
-        await _tokenProvider.RefreshTokenAsync();
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _tokenProvider.GetAccessTokenAsync());
-
         var postContent = new StringContent(payload);
 
         HttpResponseMessage response;
