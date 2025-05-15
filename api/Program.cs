@@ -13,8 +13,8 @@ var appSettings = services.AddAppSettings(env);
 
 services.AddCasHttpClient(env.IsProduction());
 services.AddCorsPolicy(builder.Configuration.GetSection("cors").Get<CorsSettings>());
-services.AddAuthentication(appSettings);
-services.AddAuthorization(appSettings);
+services.AddSsoAuthentication(appSettings.Configuration);
+services.AddSsoAuthorization();
 services.AddHealthChecks();
 services.AddLogging(appSettings);
 services.AddControllers();
