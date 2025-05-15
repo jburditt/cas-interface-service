@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="IdentityModel.AspNetCore.OAuth2Introspection" Version="6.2.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.4" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.24" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
@@ -28,7 +27,6 @@
   <ItemGroup>
     <Using Include="Api" />
     <Using Include="Client" />
-    <Using Include="IdentityModel.AspNetCore.OAuth2Introspection" />
     <Using Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
     <Using Include="Microsoft.AspNetCore.Builder" />
     <Using Include="Microsoft.AspNetCore.Hosting" />

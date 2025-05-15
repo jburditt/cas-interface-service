@@ -31,8 +31,13 @@ This application is meant to be deployed to RedHat OpenShift version 4. Full ins
 Run Docker
 -
 ```
-docker build . -t cas-adapter`
+docker build . -t cas-adapter
+
+# http
 docker run --rm -p 8080:8080 --name cas-adapter cas-adapter
+
+# https
+docker run --rm -p 8080:8080 -e ASPNETCORE_HTTP_PORTS=8080 -e ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/ssl/tls.key -e ASPNETCORE_Kestrel__Certificates__Default__Path=/ssl/tls.crt -e OPENSHIFT_BUILD_NAME=1 --name cas-adapter cas-adapter
 ```
 
 Developer Prerequisites
