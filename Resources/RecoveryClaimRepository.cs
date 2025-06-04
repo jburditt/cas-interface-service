@@ -20,22 +20,33 @@ public class RecoveryClaimRepository : BaseRepository<DFA_ProjectClaim, Recovery
         {
             var queryResults = _databaseContext.DFA_ProjectClaimSet
                 .Join(_databaseContext.SystemUserSet, pc => pc.DFA_QualifiedReceiver.Id, su => su.Id, (pc, su) => new { ProjectClaim = pc, QualifiedReceiver = su })
-                //.Where(query)
+                //.WhereIf(query.Id != null, x => x.ProjectClaim.Id == query.Id.Value)
                 .WhereIf(query.CodingBlockSubmissionStatus != null, x => x.ProjectClaim.DFA_CodingBlockSubmissionStatus == (DFA_CodingBlockSubmissionStatus?)query.CodingBlockSubmissionStatus)
                 .WhereIf(query.AfterInvoiceDate != null, x => x.ProjectClaim.DFA_InvoiceDate >= query.AfterInvoiceDate)
                 .WhereIf(query.AfterDateGoodsReceived != null, x => x.ProjectClaim.DFA_DateGoodsAndServicesReceived >= query.AfterDateGoodsReceived)
                 .WhereIf(query.AfterDateInvoiceReceived != null, x => x.ProjectClaim.DFA_ClaimReceivedDate >= query.AfterDateInvoiceReceived);
-            //.Select(x => new { x.RecoveryClaim, x.ClientCode})
-            //.ToList();
+
             var results = queryResults
                 .Select(x => new ProjectClaimEntity(x.ProjectClaim, x.QualifiedReceiver))
                 .ToList();
 
-            //    .Select(x => new ProjectClaimEntity(x.ProjectClaim, x.ClientCode, x.ExpenseProject));
-                //.GroupBy(rc => rc, cc => cc.ClientCode, (rc, cc) => new ProjectClaimEntity(rc, cc.Single()))
-                //.GroupBy(rc => rc.ProjectClaim, ep => ep.ExpenseProject, (rc, cc) => new ProjectClaimEntity(rc, cc.Single(), ep.Single()));
+            var mappedResults = _mapper.Map<IEnumerable<RecoveryClaim>>(results);
 
-            return _mapper.Map<IEnumerable<RecoveryClaim>>(results);
+            if (results.Any())
+            {
+                var clientCodes = _mapper.Map<IEnumerable<ClientCode>>(_databaseContext.DFA_ClientCodeSet);
+                var projectExpenses = _mapper.Map<IEnumerable<ExpenseProject>>(_databaseContext.EMCR_ExpenseProjectSet);
+
+                foreach (var rc in mappedResults)
+                {
+                    if (rc.ClientCodeKey?.Id != null)
+                        rc.ClientCode = clientCodes.FirstOrDefault(cc => cc.Id == rc.ClientCodeKey?.Id);
+                    if (rc.ExpenseProject?.Id != null)
+                        rc.ExpenseProject = projectExpenses.FirstOrDefault(pe => pe.Id == rc.ExpenseProject?.Id);
+                }
+            }
+
+            return mappedResults;
         }
         else
         {

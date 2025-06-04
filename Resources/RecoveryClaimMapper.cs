@@ -6,11 +6,11 @@ public class RecoveryClaimMapper : Profile
     {
         CreateMap<DFA_ProjectClaim, RecoveryClaim>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.DFA_ProjectClaimId))
-            //.ForMember(dest => dest.ClientCode, opt => opt.MapFrom(src => src.DFA_ClientCodeId))
+            .ForMember(dest => dest.ClientCodeKey, opt => opt.MapFrom(src => src.DFA_ClientCodeId))
             .ForMember(dest => dest.ResponsibilityCentreKey, opt => opt.MapFrom(src => src.DFA_Resp))
-            //.ForMember(dest => dest.ServiceLine, opt => opt.MapFrom(src => src.DFA_ServiceLine))
-            //.ForMember(dest => dest.Stob, opt => opt.MapFrom(src => src.DFA_Stob))
-            //.ForMember(dest => dest.ExpenseProject, opt => opt.MapFrom(src => src.DFA_ProjectNumber))
+            .ForMember(dest => dest.ServiceLineKey, opt => opt.MapFrom(src => src.DFA_ServiceLine))
+            .ForMember(dest => dest.StobKey, opt => opt.MapFrom(src => src.DFA_Stob))
+            .ForMember(dest => dest.ExpenseProjectKey, opt => opt.MapFrom(src => src.DFA_ProjectNumber))
             .ForMember(dest => dest.StateCode, opt => opt.MapFrom(src => src.StateCode))
             .ForMember(dest => dest.CodingBlockSubmissionStatus, opt => opt.MapFrom(src => src.DFA_CodingBlockSubmissionStatus))
             .ForMember(dest => dest.SupplierNumber, opt => opt.MapFrom(src => src.DFA_SupplierNumber))
@@ -26,11 +26,13 @@ public class RecoveryClaimMapper : Profile
 
         CreateMap<ProjectClaimEntity, RecoveryClaim>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ProjectClaim.DFA_ProjectClaimId))
-            //.ForMember(dest => dest.ResponsibilityCentreKey, opt => opt.MapFrom(src => src.ProjectClaim.DFA_Resp))
-            //.ForMember(dest => dest.ServiceLine, opt => opt.MapFrom(src => src.ProjectClaim.DFA_ServiceLine))
-            //.ForMember(dest => dest.Stob, opt => opt.MapFrom(src => src.ProjectClaim.DFA_Stob))
-            //.ForMember(dest => dest.ExpenseProject, opt => opt.MapFrom(src => src.ProjectClaim.DFA_ProjectNumber))
-            .ForMember(dest => dest.QualifiedReceiver, opt => opt.MapFrom(src => src.QualifiedReceiver));
+            .ForMember(dest => dest.ResponsibilityCentreKey, opt => opt.MapFrom(src => src.ProjectClaim.DFA_Resp))
+            .ForMember(dest => dest.ServiceLineKey, opt => opt.MapFrom(src => src.ProjectClaim.DFA_ServiceLine))
+            .ForMember(dest => dest.StobKey, opt => opt.MapFrom(src => src.ProjectClaim.DFA_Stob))
+            .ForMember(dest => dest.ExpenseProjectKey, opt => opt.MapFrom(src => src.ProjectClaim.DFA_ProjectNumber))
+            .ForMember(dest => dest.QualifiedReceiver, opt => opt.MapFrom(src => src.QualifiedReceiver))
+            .ForMember(dest => dest.ClientCodeKey, opt => opt.MapFrom(src => src.ProjectClaim.DFA_ClientCodeId));
+
 
         CreateMap<EMCR_ResponsibilityCentre, ResponsibilityCentre>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.EMCR_ResponsibilityCentreId))
