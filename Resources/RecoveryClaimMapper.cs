@@ -30,7 +30,7 @@ public class RecoveryClaimMapper : Profile
             //.ForMember(dest => dest.ServiceLine, opt => opt.MapFrom(src => src.ProjectClaim.DFA_ServiceLine))
             //.ForMember(dest => dest.Stob, opt => opt.MapFrom(src => src.ProjectClaim.DFA_Stob))
             //.ForMember(dest => dest.ExpenseProject, opt => opt.MapFrom(src => src.ProjectClaim.DFA_ProjectNumber))
-            .ForMember(dest => dest.ClientCode, opt => opt.MapFrom(src => src.ClientCode));
+            .ForMember(dest => dest.QualifiedReceiver, opt => opt.MapFrom(src => src.QualifiedReceiver));
 
         CreateMap<EMCR_ResponsibilityCentre, ResponsibilityCentre>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.EMCR_ResponsibilityCentreId))
@@ -52,7 +52,7 @@ public class RecoveryClaimMapper : Profile
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.EMCR_StobId))
             .ForMember(dest => dest.Code, opt => opt.MapFrom(src => src.EMCR_Code));
 
-        //CreateMap<SystemUser, User>();
+        CreateMap<SystemUser, User>();
             //.ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             //.ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FullName));
 

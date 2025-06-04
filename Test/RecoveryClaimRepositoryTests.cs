@@ -6,7 +6,7 @@ public class RecoveryClaimRepositoryTests(IRecoveryClaimRepository repository)
     [Fact]
     public void Query()
     {
-        var query = new ProjectClaimQuery
+        var query = new RecoveryClaimQuery
         {
             IncludeChildren = true,
             CodingBlockSubmissionStatus = CodingBlockSubmissionStatus.Submitted,

@@ -1,6 +1,6 @@
 ﻿namespace Model;
 
-public record ProjectClaimQuery //: IRequest<IEnumerable<ProjectClaim>>
+public record RecoveryClaimQuery //: IRequest<IEnumerable<ProjectClaim>>
 {
     public bool IncludeChildren { get; set; }
     public CodingBlockSubmissionStatus? CodingBlockSubmissionStatus { get; set; }
@@ -24,9 +24,11 @@ public record RecoveryClaim : IDto
     public PayGroup? PayGroup { get; set; }     // Dynamics Optional dfa_paygroup
     public DateTime? DateGoodsReceived { get; set; } // Dynamics Optional dfa_dategoodsandservicesreceived
     public DateTime? DateInvoiceReceived { get; set; }  // Dynamics Optional dfa_claimreceiveddate
-    public StaticReference? QualifiedReceiver { get; set; } // Dynamics Optional dfa_qualifiedreceiver, relationship dfa_systemuser
+    public StaticReference? QualifiedReceiverKey { get; set; } // Dynamics Optional dfa_qualifiedreceiver, relationship dfa_systemuser
+
     [MaxLength(40)]
     public string? PaymentAdviceComments { get; set; }   // Dynamics Optional dfa_paymentadvicecomments
+
     public ResponsibilityCentre? ResponsibilityCentre { get; set; } // Dynamics Optional dfa_resp
     public StaticReference? ResponsibilityCentreKey { get; set; } // Dynamics Optional dfa_resp
     public ServiceLine? ServiceLine { get; set; } // Dynamics Optional dfa_serviceline -> dfa_emcr_serviceline
@@ -34,5 +36,5 @@ public record RecoveryClaim : IDto
     public ExpenseProject? ExpenseProject { get; set; } // Dynamics Optional dfa_expenseproject -> dfa_projectnumber
 
     // Related Entities
-    public ClientCode? ClientCode { get; set; } // Dynamics Optional dfa_clientcodeid
+    public User? QualifiedReceiver { get; set; } // Dynamics Optional dfa_qualifiedreceiver
 }
