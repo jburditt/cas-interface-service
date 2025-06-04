@@ -2,6 +2,7 @@
 
 public record ProjectClaimQuery //: IRequest<IEnumerable<ProjectClaim>>
 {
+    public bool IncludeChildren { get; set; }
     public CodingBlockSubmissionStatus? CodingBlockSubmissionStatus { get; set; }
     public DateTime? AfterInvoiceDate { get; set; }
     public DateTime? AfterDateGoodsReceived { get; set; }
@@ -26,10 +27,12 @@ public record RecoveryClaim : IDto
     public StaticReference? QualifiedReceiver { get; set; } // Dynamics Optional dfa_qualifiedreceiver, relationship dfa_systemuser
     [MaxLength(40)]
     public string? PaymentAdviceComments { get; set; }   // Dynamics Optional dfa_paymentadvicecomments
-    public ClientCode? ClientCode { get; set; } // Dynamics Optional dfa_clientcodeid
     public ResponsibilityCentre? ResponsibilityCentre { get; set; } // Dynamics Optional dfa_resp
     public StaticReference? ResponsibilityCentreKey { get; set; } // Dynamics Optional dfa_resp
     public ServiceLine? ServiceLine { get; set; } // Dynamics Optional dfa_serviceline -> dfa_emcr_serviceline
     public Stob? Stob { get; set; } // Dynamics Optional dfa_stob -> dfa_emcr_stob
     public ExpenseProject? ExpenseProject { get; set; } // Dynamics Optional dfa_expenseproject -> dfa_projectnumber
+
+    // Related Entities
+    public ClientCode? ClientCode { get; set; } // Dynamics Optional dfa_clientcodeid
 }

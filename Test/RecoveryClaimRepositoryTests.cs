@@ -2,11 +2,13 @@
 
 public class RecoveryClaimRepositoryTests(IRecoveryClaimRepository repository)
 {
+    //
     [Fact]
     public void Query()
     {
         var query = new ProjectClaimQuery
         {
+            IncludeChildren = true,
             CodingBlockSubmissionStatus = CodingBlockSubmissionStatus.Submitted,
             AfterInvoiceDate = new DateTime(2023, 1, 1),
             AfterDateGoodsReceived = new DateTime(2023, 1, 1),

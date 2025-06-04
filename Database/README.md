@@ -1,10 +1,22 @@
 ## Generate Entities
 
+### Version
+As of June 4, 2025; this is the latest version. For more examples, see VSD repository.
+
+### Overview
+This Database project uses the latest standard of using Dynamics as a database and exposing ORM entities for use with repositories and command handlers
+The advantages of this new standard are:
+- Higher performance especially with nested queries which are no longer N^2 queries
+- Strongly typed queries
+- Compatible with repository or command handler patterns e.g. MediatR
+
+
 ### Prerequisites
 - [XrmToolbox](https://www.xrmtoolbox.com/) with [Early Bound Generator V2 plugin](https://www.xrmtoolbox.com/plugins/DLaB.Xrm.EarlyBoundGeneratorV2/)
 Download the latest version on the XrmToolbox home page. To install the plugin, open XrmToolbox, click on "Configuration -> Tool Library" and search for "Early Bound Generator V2" and install it.
 You can also use Tool Library to update the existing plugins.
 - Cisco vpn.gov.bc.ca connection
+
 
 ### Setup new database
 1. Add a new class library project to your .NET solution e.g. "Database"
