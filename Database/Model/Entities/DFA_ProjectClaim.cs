@@ -304,9 +304,9 @@ namespace Database.Model
 			public const string DFA_EligibleRecoveryPayableAt90 = "dfa_eligiblerecoverypayableat90";
 			public const string DFA_EligibleRecoveryPayableAt90_Base = "dfa_eligiblerecoverypayableat90_base";
 			public const string DFA_EMCR_ExpenseProject_DFA_ProjectClaim_ProjectNumber = "dfa_emcr_expenseproject_dfa_projectclaim_ProjectNumber";
-			public const string DFA_EMCR_ResponsibilityCentre_DFA_ProjectClaim_ResP = "dfa_emcr_responsibilitycentre_dfa_projectclaim_RESP";
+			public const string DFA_EMCR_ResponsibilityCentre_DFA_ProjectClaim_Resp = "dfa_emcr_responsibilitycentre_dfa_projectclaim_RESP";
 			public const string DFA_EMCR_ServiceLine_DFA_ProjectClaim_ServiceLine = "dfa_emcr_serviceline_dfa_projectclaim_ServiceLine";
-			public const string DFA_EMCR_STOB_DFA_ProjectClaim_STOB = "dfa_emcr_stob_dfa_projectclaim_STOB";
+			public const string DFA_EMCR_Stob_DFA_ProjectClaim_Stob = "dfa_emcr_stob_dfa_projectclaim_STOB";
 			public const string DFA_EmployeeNumber = "dfa_employeenumber";
 			public const string DFA_ExpenseAuthority = "dfa_expenseauthority";
 			public const string DFA_ExpenseAuthorityAdditionalInForE = "dfa_expenseauthorityadditionalinfore";
@@ -384,8 +384,8 @@ namespace Database.Model
 			public const string DFA_RecommendAtaIon = "dfa_recommendataion";
 			public const string DFA_RecoveryPlanId = "dfa_recoveryplanid";
 			public const string DFA_RecoveryPlanIdName = "dfa_recoveryplanidname";
-			public const string DFA_ResP = "dfa_resp";
-			public const string DFA_RESpName = "dfa_respname";
+			public const string DFA_Resp = "dfa_resp";
+			public const string DFA_RespName = "dfa_respname";
 			public const string DFA_S3ValidationPassed = "dfa_s3validationpassed";
 			public const string DFA_S3ValidationPassedName = "dfa_s3validationpassedname";
 			public const string DFA_S3ValidationResult = "dfa_s3validationresult";
@@ -404,8 +404,8 @@ namespace Database.Model
 			public const string DFA_StageQualifiedReceiver = "dfa_stagequalifiedreceiver";
 			public const string DFA_StageSubmitted = "dfa_stagesubmitted";
 			public const string DFA_StageUnderReview = "dfa_stageunderreview";
-			public const string DFA_STOB = "dfa_stob";
-			public const string DFA_STOBName = "dfa_stobname";
+			public const string DFA_Stob = "dfa_stob";
+			public const string DFA_StobName = "dfa_stobname";
 			public const string DFA_Submitted = "dfa_submitted";
 			public const string DFA_SubmittedBpf = "dfa_submittedbpf";
 			public const string DFA_SubmittedBpfName = "dfa_submittedbpfname";
@@ -3551,7 +3551,7 @@ namespace Database.Model
 		}
 		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("dfa_resp")]
-		public Microsoft.Xrm.Sdk.EntityReference DFA_ResP
+		public Microsoft.Xrm.Sdk.EntityReference DFA_Resp
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -3566,7 +3566,7 @@ namespace Database.Model
 		}
 		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("dfa_respname")]
-		public string DFA_RESpName
+		public string DFA_RespName
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -3857,7 +3857,7 @@ namespace Database.Model
 		}
 		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("dfa_stob")]
-		public Microsoft.Xrm.Sdk.EntityReference DFA_STOB
+		public Microsoft.Xrm.Sdk.EntityReference DFA_Stob
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -3872,7 +3872,7 @@ namespace Database.Model
 		}
 		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("dfa_stobname")]
-		public string DFA_STOBName
+		public string DFA_StobName
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -5184,7 +5184,7 @@ namespace Database.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("dfa_resp")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("dfa_emcr_responsibilitycentre_dfa_projectclaim_RESP")]
-		public Database.Model.EMCR_ResponsibilityCentre DFA_EMCR_ResponsibilityCentre_DFA_ProjectClaim_ResP
+		public Database.Model.EMCR_ResponsibilityCentre DFA_EMCR_ResponsibilityCentre_DFA_ProjectClaim_Resp
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -5222,17 +5222,17 @@ namespace Database.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("dfa_stob")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("dfa_emcr_stob_dfa_projectclaim_STOB")]
-		public Database.Model.EMCR_STOB DFA_EMCR_STOB_DFA_ProjectClaim_STOB
+		public Database.Model.EMCR_Stob DFA_EMCR_Stob_DFA_ProjectClaim_Stob
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<Database.Model.EMCR_STOB>("dfa_emcr_stob_dfa_projectclaim_STOB", null);
+				return this.GetRelatedEntity<Database.Model.EMCR_Stob>("dfa_emcr_stob_dfa_projectclaim_STOB", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.SetRelatedEntity<Database.Model.EMCR_STOB>("dfa_emcr_stob_dfa_projectclaim_STOB", null, value);
+				this.SetRelatedEntity<Database.Model.EMCR_Stob>("dfa_emcr_stob_dfa_projectclaim_STOB", null, value);
 			}
 		}
 		

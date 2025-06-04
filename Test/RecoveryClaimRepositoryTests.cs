@@ -13,5 +13,8 @@ public class RecoveryClaimRepositoryTests(IRecoveryClaimRepository repository)
             AfterDateInvoiceReceived = new DateTime(2023, 1, 1)
         };
         var recoveryClaims = repository.Query(query);
+
+        // Assert
+        Assert.NotNull(recoveryClaims);
     }
 }

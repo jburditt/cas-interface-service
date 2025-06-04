@@ -16,7 +16,7 @@ namespace Database.Model
 	/// Status of the Stob 
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum EMCR_STOB_StateCode
+	public enum EMCR_Stob_StateCode
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -32,7 +32,7 @@ namespace Database.Model
 	/// Reason for the status of the Stob 
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum EMCR_STOB_StatusCode
+	public enum EMCR_Stob_StatusCode
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -49,7 +49,7 @@ namespace Database.Model
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("emcr_stob")]
-	public partial class EMCR_STOB : Microsoft.Xrm.Sdk.Entity
+	public partial class EMCR_Stob : Microsoft.Xrm.Sdk.Entity
 	{
 		
 		/// <summary>
@@ -64,20 +64,20 @@ namespace Database.Model
 			public const string CreatedOnBehalfBy = "createdonbehalfby";
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string CreatedOnBehalfByYomiName = "createdonbehalfbyyominame";
-			public const string DFA_EMCR_STOB_DFA_ProjectClaim_STOB = "DFA_EMCR_STOB_DFA_ProjectClaim_STOB";
+			public const string DFA_EMCR_Stob_DFA_ProjectClaim_Stob = "DFA_EMCR_Stob_DFA_ProjectClaim_Stob";
 			public const string EMCR_Code = "emcr_code";
 			public const string EMCR_DetailedLongDescription = "emcr_detailedlongdescription";
 			public const string EMCR_Name = "emcr_name";
 			public const string EMCR_ShortDescription = "emcr_shortdescription";
-			public const string EMCR_STOBGroup = "emcr_stobgroup";
-			public const string EMCR_STOBGroupName = "emcr_stobgroupname";
-			public const string EMCR_STOBId = "emcr_stobid";
+			public const string EMCR_StobGroup = "emcr_stobgroup";
+			public const string EMCR_StobGroupName = "emcr_stobgroupname";
+			public const string EMCR_StobId = "emcr_stobid";
 			public const string Id = "emcr_stobid";
 			public const string ImportSequenceNumber = "importsequencenumber";
-			public const string Lk_EMCR_STOB_CreatedBy = "lk_emcr_stob_createdby";
-			public const string Lk_EMCR_STOB_CreatedOnBehalfBy = "lk_emcr_stob_createdonbehalfby";
-			public const string Lk_EMCR_STOB_ModifiedBy = "lk_emcr_stob_modifiedby";
-			public const string Lk_EMCR_STOB_ModifiedOnBehalfBy = "lk_emcr_stob_modifiedonbehalfby";
+			public const string Lk_EMCR_Stob_CreatedBy = "lk_emcr_stob_createdby";
+			public const string Lk_EMCR_Stob_CreatedOnBehalfBy = "lk_emcr_stob_createdonbehalfby";
+			public const string Lk_EMCR_Stob_ModifiedBy = "lk_emcr_stob_modifiedby";
+			public const string Lk_EMCR_Stob_ModifiedOnBehalfBy = "lk_emcr_stob_modifiedonbehalfby";
 			public const string ModifiedBy = "modifiedby";
 			public const string ModifiedByName = "modifiedbyname";
 			public const string ModifiedByYomiName = "modifiedbyyominame";
@@ -98,19 +98,19 @@ namespace Database.Model
 		}
 		
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public EMCR_STOB(System.Guid id) : 
+		public EMCR_Stob(System.Guid id) : 
 				base(EntityLogicalName, id)
 		{
 		}
 		
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public EMCR_STOB(string keyName, object keyValue) : 
+		public EMCR_Stob(string keyName, object keyValue) : 
 				base(EntityLogicalName, keyName, keyValue)
 		{
 		}
 		
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public EMCR_STOB(Microsoft.Xrm.Sdk.KeyAttributeCollection keyAttributes) : 
+		public EMCR_Stob(Microsoft.Xrm.Sdk.KeyAttributeCollection keyAttributes) : 
 				base(EntityLogicalName, keyAttributes)
 		{
 		}
@@ -119,7 +119,7 @@ namespace Database.Model
 		/// Default Constructor.
 		/// </summary>
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public EMCR_STOB() : 
+		public EMCR_Stob() : 
 				base(EntityLogicalName)
 		{
 		}
@@ -324,7 +324,7 @@ namespace Database.Model
 		/// Stob Group
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("emcr_stobgroup")]
-		public Microsoft.Xrm.Sdk.EntityReference EMCR_STOBGroup
+		public Microsoft.Xrm.Sdk.EntityReference EMCR_StobGroup
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -339,7 +339,7 @@ namespace Database.Model
 		}
 		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("emcr_stobgroupname")]
-		public string EMCR_STOBGroupName
+		public string EMCR_StobGroupName
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -359,7 +359,7 @@ namespace Database.Model
 		/// Unique identifier for entity instances
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("emcr_stobid")]
-		public System.Nullable<System.Guid> EMCR_STOBId
+		public System.Nullable<System.Guid> EMCR_StobId
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -392,7 +392,7 @@ namespace Database.Model
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.EMCR_STOBId = value;
+				this.EMCR_StobId = value;
 			}
 		}
 		
@@ -578,12 +578,12 @@ namespace Database.Model
 		/// Status of the Stob 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
-		public virtual EMCR_STOB_StateCode? StateCode
+		public virtual EMCR_Stob_StateCode? StateCode
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return ((EMCR_STOB_StateCode?)(EntityOptionSetEnum.GetEnum(this, "statecode")));
+				return ((EMCR_Stob_StateCode?)(EntityOptionSetEnum.GetEnum(this, "statecode")));
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
@@ -613,12 +613,12 @@ namespace Database.Model
 		/// Reason for the status of the Stob 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
-		public virtual EMCR_STOB_StatusCode? StatusCode
+		public virtual EMCR_Stob_StatusCode? StatusCode
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return ((EMCR_STOB_StatusCode?)(EntityOptionSetEnum.GetEnum(this, "statuscode")));
+				return ((EMCR_Stob_StatusCode?)(EntityOptionSetEnum.GetEnum(this, "statuscode")));
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
@@ -697,7 +697,7 @@ namespace Database.Model
 		/// 1:N dfa_emcr_stob_dfa_projectclaim_STOB
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("dfa_emcr_stob_dfa_projectclaim_STOB")]
-		public System.Collections.Generic.IEnumerable<Database.Model.DFA_ProjectClaim> DFA_EMCR_STOB_DFA_ProjectClaim_STOB
+		public System.Collections.Generic.IEnumerable<Database.Model.DFA_ProjectClaim> DFA_EMCR_Stob_DFA_ProjectClaim_Stob
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -716,7 +716,7 @@ namespace Database.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_emcr_stob_createdby")]
-		public Database.Model.SystemUser Lk_EMCR_STOB_CreatedBy
+		public Database.Model.SystemUser Lk_EMCR_Stob_CreatedBy
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -730,7 +730,7 @@ namespace Database.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_emcr_stob_createdonbehalfby")]
-		public Database.Model.SystemUser Lk_EMCR_STOB_CreatedOnBehalfBy
+		public Database.Model.SystemUser Lk_EMCR_Stob_CreatedOnBehalfBy
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -749,7 +749,7 @@ namespace Database.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_emcr_stob_modifiedby")]
-		public Database.Model.SystemUser Lk_EMCR_STOB_ModifiedBy
+		public Database.Model.SystemUser Lk_EMCR_Stob_ModifiedBy
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -763,7 +763,7 @@ namespace Database.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_emcr_stob_modifiedonbehalfby")]
-		public Database.Model.SystemUser Lk_EMCR_STOB_ModifiedOnBehalfBy
+		public Database.Model.SystemUser Lk_EMCR_Stob_ModifiedOnBehalfBy
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -782,7 +782,7 @@ namespace Database.Model
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public EMCR_STOB(object anonymousType) : 
+		public EMCR_Stob(object anonymousType) : 
 				this()
 		{
             foreach (var p in anonymousType.GetType().GetProperties())

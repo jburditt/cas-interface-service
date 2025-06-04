@@ -6,11 +6,11 @@ public class RecoveryClaimMapper : Profile
     {
         CreateMap<DFA_ProjectClaim, RecoveryClaim>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.DFA_ProjectClaimId))
-            .ForMember(dest => dest.ClientCode, opt => opt.MapFrom(src => src.DFA_ClientCodeId))
-            .ForMember(dest => dest.ResponsibilityCentre, opt => opt.MapFrom(src => src.DFA_RESP))
-            .ForMember(dest => dest.ServiceLine, opt => opt.MapFrom(src => src.DFA_ServiceLine))
-            .ForMember(dest => dest.STOB, opt => opt.MapFrom(src => src.DFA_STOB))
-            .ForMember(dest => dest.ExpenseProject, opt => opt.MapFrom(src => src.DFA_ProjectNumber))
+            //.ForMember(dest => dest.ClientCode, opt => opt.MapFrom(src => src.DFA_ClientCodeId))
+            .ForMember(dest => dest.ResponsibilityCentreKey, opt => opt.MapFrom(src => src.DFA_Resp))
+            //.ForMember(dest => dest.ServiceLine, opt => opt.MapFrom(src => src.DFA_ServiceLine))
+            //.ForMember(dest => dest.Stob, opt => opt.MapFrom(src => src.DFA_Stob))
+            //.ForMember(dest => dest.ExpenseProject, opt => opt.MapFrom(src => src.DFA_ProjectNumber))
             .ForMember(dest => dest.StateCode, opt => opt.MapFrom(src => src.StateCode))
             .ForMember(dest => dest.CodingBlockSubmissionStatus, opt => opt.MapFrom(src => src.DFA_CodingBlockSubmissionStatus))
             .ForMember(dest => dest.SupplierNumber, opt => opt.MapFrom(src => src.DFA_SupplierNumber))
@@ -24,6 +24,29 @@ public class RecoveryClaimMapper : Profile
             .ForMember(dest => dest.QualifiedReceiver, opt => opt.MapFrom(src => src.DFA_QualifiedReceiver))
             .ForMember(dest => dest.PaymentAdviceComments, opt => opt.MapFrom(src => src.DFA_PaymentAdviceComments));
 
-        //CreateMap<EMCR_R
+        CreateMap<EMCR_ResponsibilityCentre, ResponsibilityCentre>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.EMCR_ResponsibilityCentreId))
+            .ForMember(dest => dest.Code, opt => opt.MapFrom(src => src.EMCR_Code));
+
+        CreateMap<EMCR_ExpenseProject, ExpenseProject>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.EMCR_ExpenseProjectId))
+            .ForMember(dest => dest.Code, opt => opt.MapFrom(src => src.EMCR_Code));
+
+        CreateMap<DFA_ClientCode, ClientCode>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.DFA_ClientCodeId))
+            .ForMember(dest => dest.Code, opt => opt.MapFrom(src => src.DFA_Code));
+
+        CreateMap<EMCR_ServiceLine, ServiceLine>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.EMCR_ServiceLineId))
+            .ForMember(dest => dest.Code, opt => opt.MapFrom(src => src.EMCR_Code));
+
+        CreateMap<EMCR_Stob, Stob>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.EMCR_StobId))
+            .ForMember(dest => dest.Code, opt => opt.MapFrom(src => src.EMCR_Code));
+
+        //CreateMap<SystemUser, User>();
+            //.ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            //.ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FullName));
+
     }
 }

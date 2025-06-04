@@ -445,10 +445,10 @@ namespace Database.Model
 			public const string Lk_EMCR_ServiceLine_CreatedOnBehalfBy = "Lk_EMCR_ServiceLine_CreatedOnBehalfBy";
 			public const string Lk_EMCR_ServiceLine_ModifiedBy = "Lk_EMCR_ServiceLine_ModifiedBy";
 			public const string Lk_EMCR_ServiceLine_ModifiedOnBehalfBy = "Lk_EMCR_ServiceLine_ModifiedOnBehalfBy";
-			public const string Lk_EMCR_STOB_CreatedBy = "Lk_EMCR_STOB_CreatedBy";
-			public const string Lk_EMCR_STOB_CreatedOnBehalfBy = "Lk_EMCR_STOB_CreatedOnBehalfBy";
-			public const string Lk_EMCR_STOB_ModifiedBy = "Lk_EMCR_STOB_ModifiedBy";
-			public const string Lk_EMCR_STOB_ModifiedOnBehalfBy = "Lk_EMCR_STOB_ModifiedOnBehalfBy";
+			public const string Lk_EMCR_Stob_CreatedBy = "Lk_EMCR_Stob_CreatedBy";
+			public const string Lk_EMCR_Stob_CreatedOnBehalfBy = "Lk_EMCR_Stob_CreatedOnBehalfBy";
+			public const string Lk_EMCR_Stob_ModifiedBy = "Lk_EMCR_Stob_ModifiedBy";
+			public const string Lk_EMCR_Stob_ModifiedOnBehalfBy = "Lk_EMCR_Stob_ModifiedOnBehalfBy";
 			public const string ReferencingLk_SystemUser_CreatedOnBehalfBy = "lk_systemuser_createdonbehalfby";
 			public const string ReferencingLk_SystemUser_ModifiedOnBehalfBy = "lk_systemuser_modifiedonbehalfby";
 			public const string ReferencingLk_SystemUserBase_CreatedBy = "lk_systemuserbase_createdby";
@@ -3848,17 +3848,17 @@ namespace Database.Model
 		/// 1:N lk_emcr_stob_createdby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_emcr_stob_createdby")]
-		public System.Collections.Generic.IEnumerable<Database.Model.EMCR_STOB> Lk_EMCR_STOB_CreatedBy
+		public System.Collections.Generic.IEnumerable<Database.Model.EMCR_Stob> Lk_EMCR_Stob_CreatedBy
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<Database.Model.EMCR_STOB>("lk_emcr_stob_createdby", null);
+				return this.GetRelatedEntities<Database.Model.EMCR_Stob>("lk_emcr_stob_createdby", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.SetRelatedEntities<Database.Model.EMCR_STOB>("lk_emcr_stob_createdby", null, value);
+				this.SetRelatedEntities<Database.Model.EMCR_Stob>("lk_emcr_stob_createdby", null, value);
 			}
 		}
 		
@@ -3866,17 +3866,17 @@ namespace Database.Model
 		/// 1:N lk_emcr_stob_createdonbehalfby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_emcr_stob_createdonbehalfby")]
-		public System.Collections.Generic.IEnumerable<Database.Model.EMCR_STOB> Lk_EMCR_STOB_CreatedOnBehalfBy
+		public System.Collections.Generic.IEnumerable<Database.Model.EMCR_Stob> Lk_EMCR_Stob_CreatedOnBehalfBy
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<Database.Model.EMCR_STOB>("lk_emcr_stob_createdonbehalfby", null);
+				return this.GetRelatedEntities<Database.Model.EMCR_Stob>("lk_emcr_stob_createdonbehalfby", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.SetRelatedEntities<Database.Model.EMCR_STOB>("lk_emcr_stob_createdonbehalfby", null, value);
+				this.SetRelatedEntities<Database.Model.EMCR_Stob>("lk_emcr_stob_createdonbehalfby", null, value);
 			}
 		}
 		
@@ -3884,17 +3884,17 @@ namespace Database.Model
 		/// 1:N lk_emcr_stob_modifiedby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_emcr_stob_modifiedby")]
-		public System.Collections.Generic.IEnumerable<Database.Model.EMCR_STOB> Lk_EMCR_STOB_ModifiedBy
+		public System.Collections.Generic.IEnumerable<Database.Model.EMCR_Stob> Lk_EMCR_Stob_ModifiedBy
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<Database.Model.EMCR_STOB>("lk_emcr_stob_modifiedby", null);
+				return this.GetRelatedEntities<Database.Model.EMCR_Stob>("lk_emcr_stob_modifiedby", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.SetRelatedEntities<Database.Model.EMCR_STOB>("lk_emcr_stob_modifiedby", null, value);
+				this.SetRelatedEntities<Database.Model.EMCR_Stob>("lk_emcr_stob_modifiedby", null, value);
 			}
 		}
 		
@@ -3902,17 +3902,17 @@ namespace Database.Model
 		/// 1:N lk_emcr_stob_modifiedonbehalfby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_emcr_stob_modifiedonbehalfby")]
-		public System.Collections.Generic.IEnumerable<Database.Model.EMCR_STOB> Lk_EMCR_STOB_ModifiedOnBehalfBy
+		public System.Collections.Generic.IEnumerable<Database.Model.EMCR_Stob> Lk_EMCR_Stob_ModifiedOnBehalfBy
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<Database.Model.EMCR_STOB>("lk_emcr_stob_modifiedonbehalfby", null);
+				return this.GetRelatedEntities<Database.Model.EMCR_Stob>("lk_emcr_stob_modifiedonbehalfby", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.SetRelatedEntities<Database.Model.EMCR_STOB>("lk_emcr_stob_modifiedonbehalfby", null, value);
+				this.SetRelatedEntities<Database.Model.EMCR_Stob>("lk_emcr_stob_modifiedonbehalfby", null, value);
 			}
 		}
 		

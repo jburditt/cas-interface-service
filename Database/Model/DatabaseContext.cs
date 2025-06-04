@@ -84,13 +84,13 @@ namespace Database.Model
 		}
 		
 		/// <summary>
-		/// Gets a binding to the set of all <see cref="Database.Model.EMCR_STOB"/> entities.
+		/// Gets a binding to the set of all <see cref="Database.Model.EMCR_Stob"/> entities.
 		/// </summary>
-		public System.Linq.IQueryable<Database.Model.EMCR_STOB> EMCR_STOBSet
+		public System.Linq.IQueryable<Database.Model.EMCR_Stob> EMCR_StobSet
 		{
 			get
 			{
-				return this.CreateQuery<Database.Model.EMCR_STOB>();
+				return this.CreateQuery<Database.Model.EMCR_Stob>();
 			}
 		}
 		

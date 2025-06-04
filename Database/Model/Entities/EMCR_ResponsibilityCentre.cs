@@ -64,7 +64,7 @@ namespace Database.Model
 			public const string CreatedOnBehalfBy = "createdonbehalfby";
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string CreatedOnBehalfByYomiName = "createdonbehalfbyyominame";
-			public const string DFA_EMCR_ResponsibilityCentre_DFA_ProjectClaim_ResP = "DFA_EMCR_ResponsibilityCentre_DFA_ProjectClaim_ResP";
+			public const string DFA_EMCR_ResponsibilityCentre_DFA_ProjectClaim_Resp = "DFA_EMCR_ResponsibilityCentre_DFA_ProjectClaim_Resp";
 			public const string EMCR_Code = "emcr_code";
 			public const string EMCR_Description = "emcr_description";
 			public const string EMCR_Name = "emcr_name";
@@ -641,7 +641,7 @@ namespace Database.Model
 		/// 1:N dfa_emcr_responsibilitycentre_dfa_projectclaim_RESP
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("dfa_emcr_responsibilitycentre_dfa_projectclaim_RESP")]
-		public System.Collections.Generic.IEnumerable<Database.Model.DFA_ProjectClaim> DFA_EMCR_ResponsibilityCentre_DFA_ProjectClaim_ResP
+		public System.Collections.Generic.IEnumerable<Database.Model.DFA_ProjectClaim> DFA_EMCR_ResponsibilityCentre_DFA_ProjectClaim_Resp
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get

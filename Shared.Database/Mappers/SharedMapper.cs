@@ -4,8 +4,10 @@ public class SharedMapper : Profile
 {
     public SharedMapper()
     {
-        RecognizeDestinationPrefixes("dfa_");
-        RecognizePrefixes("dfa_");
+        RecognizeDestinationPrefixes("DFA_");
+        RecognizePrefixes("DFA_");
+        RecognizeDestinationPrefixes("EMCR_");
+        RecognizePrefixes("EMCR_");
 
         RecognizeDestinationPostfixes("Id");
         RecognizePostfixes("Id");
