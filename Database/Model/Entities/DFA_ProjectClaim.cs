@@ -334,7 +334,7 @@ namespace Database.Model
 			public const string DFA_IncludedInAdvancedPaymentCalculationsName = "dfa_includedinadvancedpaymentcalculationsname";
 			public const string DFA_InvoiceChange = "dfa_invoicechange";
 			public const string DFA_InvoiceChangeName = "dfa_invoicechangename";
-			public const string DFA_InvoicedAte = "dfa_invoicedate";
+			public const string DFA_InvoiceDate = "dfa_invoicedate";
 			public const string DFA_InvoiceNumber = "dfa_invoicenumber";
 			public const string DFA_InvoiceTotal = "dfa_invoicetotal";
 			public const string DFA_InvoiceTotal_Base = "dfa_invoicetotal_base";
@@ -2749,7 +2749,7 @@ namespace Database.Model
 		}
 		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("dfa_invoicedate")]
-		public System.Nullable<System.DateTime> DFA_InvoicedAte
+		public System.Nullable<System.DateTime> DFA_InvoiceDate
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get

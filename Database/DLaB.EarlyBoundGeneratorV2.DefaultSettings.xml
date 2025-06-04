@@ -84,6 +84,7 @@ FeatureSet|
 FedEx|
 ForAn|
 Geronimo|
+InvoiceDate|
 IsMsTeams|
 IsPaiEnabled|
 IsSopIntegration|
@@ -127,7 +128,7 @@ VoiceMail</TokenCapitalizationOverrides>
   <Namespace>Database.Model</Namespace>
   <ServiceContextName>DatabaseContext</ServiceContextName>
   <SuppressGeneratedCodeAttribute>true</SuppressGeneratedCodeAttribute>
-  <SettingsVersion>2.2024.5.16</SettingsVersion>
+  <SettingsVersion>2.2025.4.20</SettingsVersion>
   <UpdateBuilderSettingsJson>true</UpdateBuilderSettingsJson>
   <Version>2.2025.4.20</Version>
 </Config>

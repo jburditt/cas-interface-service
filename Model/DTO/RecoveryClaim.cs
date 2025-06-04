@@ -2,10 +2,10 @@
 
 public record ProjectClaimQuery //: IRequest<IEnumerable<ProjectClaim>>
 {
-    public CodingBlockSubmissionStatus CodingBlockSubmissionStatus { get; set; }
-    public DateTime InvoiceDate { get; set; }
-    public DateTime DateGoodsReceived { get; set; }
-    public DateTime DateInvoiceReceived { get; set; }
+    public CodingBlockSubmissionStatus? CodingBlockSubmissionStatus { get; set; }
+    public DateTime? AfterInvoiceDate { get; set; }
+    public DateTime? AfterDateGoodsReceived { get; set; }
+    public DateTime? AfterDateInvoiceReceived { get; set; }
 }
 
 public record RecoveryClaim : IDto
