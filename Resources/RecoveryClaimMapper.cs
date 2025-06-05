@@ -31,7 +31,8 @@ public class RecoveryClaimMapper : Profile
             .ForMember(dest => dest.StobKey, opt => opt.MapFrom(src => src.ProjectClaim.DFA_Stob))
             .ForMember(dest => dest.ExpenseProjectKey, opt => opt.MapFrom(src => src.ProjectClaim.DFA_ProjectNumber))
             .ForMember(dest => dest.QualifiedReceiver, opt => opt.MapFrom(src => src.QualifiedReceiver))
-            .ForMember(dest => dest.ClientCodeKey, opt => opt.MapFrom(src => src.ProjectClaim.DFA_ClientCodeId));
+            .ForMember(dest => dest.ClientCodeKey, opt => opt.MapFrom(src => src.ProjectClaim.DFA_ClientCodeId))
+            .ForMember(dest => dest.ClientCode, opt => opt.MapFrom(src => src.ClientCode));
 
 
         CreateMap<EMCR_ResponsibilityCentre, ResponsibilityCentre>()
