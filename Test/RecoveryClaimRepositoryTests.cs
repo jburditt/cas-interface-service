@@ -9,7 +9,7 @@
         {
             IncludeChildren = true,
             Id = new Guid("1e06ea0a-7c91-ef11-b853-00505683fbf4"),
-            CodingBlockSubmissionStatus = CodingBlockSubmissionStatus.Submitted,
+            CodingBlockSubmissionStatus = CodingBlockSubmissionStatus.PendingSubmission,
             //AfterInvoiceDate = new DateTime(2023, 1, 1),
             //AfterDateGoodsReceived = new DateTime(2023, 1, 1),
             //AfterDateInvoiceReceived = new DateTime(2023, 1, 1)
@@ -28,8 +28,15 @@
         foreach (var recoveryClaim in recoveryClaims)
         {
             var invoice = mapper.Map<Invoice>(recoveryClaim);
-            //var httpResponse = await casService.CreateInvoice(invoice);
-
+            var response = await casService.CreateInvoice(invoice);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                repository.UpdateCodingBlockSubmissionStatus(recoveryClaim.Id, CodingBlockSubmissionStatus.Submitted);
+            }
+            else
+            {
+                repository.UpdateCodingBlockSubmissionStatus(recoveryClaim.Id, CodingBlockSubmissionStatus.Failed);
+            }
         }
 
         // Assert

@@ -76,13 +76,14 @@ public class RecoveryClaimMapper : Profile
             .ForMember(dest => dest.QualifiedReceiver, opt => opt.MapFrom(src => src.QualifiedReceiver.FullName))
             .ForMember(dest => dest.InvoiceBatchName, opt => opt.MapFrom(src => "EMCR DFA"))
             .ForMember(dest => dest.PayGroup, opt => opt.MapFrom(src => src.PayGroup == null ? "GEN CHQ" : src.PayGroup.GetDescription()))
+            .ForMember(dest => dest.Terms, opt => opt.MapFrom(src => "20 Days"))
             .ForMember(dest => dest.InvoiceLineDetails, opt => opt.MapFrom(src => new List<InvoiceLineDetail>
             {
                 new InvoiceLineDetail
                 {
                     InvoiceLineNumber = 1,
                     InvoiceLineAmount = src.InvoiceAmount ?? 0,
-                    DefaultDistributionAccount = $"{src.ExpenseProject.Code}.{src.ClientCode.Code}.{src.ResponsibilityCentre.Code}.{src.Stob.Code}.{src.ServiceLine.Code}"
+                    DefaultDistributionAccount = $"{src.ClientCode.Code}.{src.ResponsibilityCentre.Code}.{src.ServiceLine.Code}.{src.Stob.Code}.{src.ExpenseProject.Code}.000000.0000"
                 }
             }));
     }

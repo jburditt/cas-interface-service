@@ -1,4 +1,6 @@
-﻿public class InvoiceLineDetail
+﻿namespace Model;
+
+public class InvoiceLineDetail
 {
     public int InvoiceLineNumber { get; set; }
 

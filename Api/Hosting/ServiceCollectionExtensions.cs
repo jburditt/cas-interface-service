@@ -5,6 +5,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddTransient<IRecoveryClaimRepository, RecoveryClaimRepository>();
+        services.AddTransient<IRecoveryClaimService, RecoveryClaimService>();
         return services;
     }
 

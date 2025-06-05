@@ -3,6 +3,7 @@
 public interface IRecoveryClaimRepository : IQueryRepository<RecoveryClaimQuery, RecoveryClaim>, IBaseRepository<RecoveryClaim>
 {
     IEnumerable<RecoveryClaim> GetPending();
+    void UpdateCodingBlockSubmissionStatus(Guid id, CodingBlockSubmissionStatus submitted);
 }
 
 public class RecoveryClaimRepository : BaseRepository<DFA_ProjectClaim, RecoveryClaim>, IRecoveryClaimRepository
@@ -42,6 +43,17 @@ public class RecoveryClaimRepository : BaseRepository<DFA_ProjectClaim, Recovery
                 || (x.ProjectClaim.DFA_DateGoodsAndServicesReceived.HasValue && x.ProjectClaim.DFA_DateGoodsAndServicesReceived.Value.AddDays(10) > DateTime.UtcNow));
 
         return _mapper.Map<IEnumerable<RecoveryClaim>>(queryResults);
+    }
+
+    // TODO this should be generic and performance could be improved
+    public void UpdateCodingBlockSubmissionStatus(Guid id, CodingBlockSubmissionStatus codingBlockSubmissionStatus)
+    {
+        var projectClaim = _databaseContext.DFA_ProjectClaimSet.FirstOrDefault(x => x.Id == id);
+        if (projectClaim != null)
+        {
+            projectClaim.DFA_CodingBlockSubmissionStatus = (DFA_CodingBlockSubmissionStatus)codingBlockSubmissionStatus;
+            _databaseContext.SaveChanges();
+        }
     }
 
     // TODO could not fully implement with "IncludeChildren", more research required

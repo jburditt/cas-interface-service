@@ -248,5 +248,3 @@ public class CasService(ICasHttpClient _httpClient, IAppSettings appSettings, IL
         }
     }
 }
-
-public record Response(string Content, HttpStatusCode StatusCode);
