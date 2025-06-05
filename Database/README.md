@@ -47,6 +47,8 @@ NOTE in theory, you could add your authentication profile to PAC using your conn
 ### Limitations
 - Method-based query syntax is limited to joining one table AFAIK
 - LINQ query expressions do not fully support `where`
+    where => The left side of the clause must be an attribute name and the right side of the clause must be a value. You cannot set the left side to a constant. Both the sides of the clause cannot be constants.
+	https://learn.microsoft.com/en-us/power-apps/developer/data-platform/org-service/linq-query-examples
 
 
 ## Troubleshooting

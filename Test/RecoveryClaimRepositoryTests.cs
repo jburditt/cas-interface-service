@@ -21,4 +21,13 @@ public class RecoveryClaimRepositoryTests(IRecoveryClaimRepository repository)
         // Assert
         Assert.NotNull(recoveryClaims);
     }
+
+    [Fact]
+    public void GetPending_Success()
+    {
+        var recoveryClaims = repository.GetPending();
+
+        // Assert
+        Assert.NotNull(recoveryClaims);
+    }
 }
