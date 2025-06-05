@@ -29,6 +29,18 @@ public class RecoveryClaimRepository : BaseRepository<DFA_ProjectClaim, Recovery
                 .ToList()
                 .Select(x => new ProjectClaimEntity(x.ProjectClaim, x.QualifiedReceiver, x.ClientCode, x.ExpenseProject, x.Stob, x.ResponsibilityCentre, x.ServiceLine));
 
+        // TODO this is not as performant as it could be, we are filtering the results AFTER the database call
+        // it is likely possible to add the commented out clauses below to the above query but it requires reading the documentation and working around the limitations of LINQ support
+            //where pc.DFA_InvoiceDate.HasValue && pc.DFA_InvoiceDate.Value.AddDays(10) > DateTime.UtcNow
+            //where pc.DFA_ClaimReceivedDate.HasValue && pc.DFA_ClaimReceivedDate.Value.AddDays(10) > DateTime.UtcNow
+            //where pc.DFA_DateGoodsAndServicesReceived.HasValue && pc.DFA_DateGoodsAndServicesReceived.Value.AddDays(10) > DateTime.UtcNow
+
+        queryResults = queryResults
+            .Where(x => 
+                (x.ProjectClaim.DFA_InvoiceDate.HasValue && x.ProjectClaim.DFA_InvoiceDate.Value.AddDays(10) > DateTime.UtcNow)
+                || (x.ProjectClaim.DFA_ClaimReceivedDate.HasValue && x.ProjectClaim.DFA_ClaimReceivedDate.Value.AddDays(10) > DateTime.UtcNow)
+                || (x.ProjectClaim.DFA_DateGoodsAndServicesReceived.HasValue && x.ProjectClaim.DFA_DateGoodsAndServicesReceived.Value.AddDays(10) > DateTime.UtcNow));
+
         return _mapper.Map<IEnumerable<RecoveryClaim>>(queryResults);
     }
 
