@@ -44,6 +44,11 @@ This will generate the entities, messages, optionsets in their corresponding fol
 
 NOTE in theory, you could add your authentication profile to PAC using your connection string and then use the command lines found in the generated code. If you do try this, please update this ReadMe.md with your findings.
 
+### Limitations
+- Method-based query syntax is limited to joining one table AFAIK
+- LINQ query expressions do not fully support `where`
+
+
 ## Troubleshooting
 
 If you encounter a user authentication error and the authentication hasn't changed and your VPN is connected, try restarting the XrmToolbox application. I find this happens often but restarting always fixes the issue.
@@ -52,3 +57,6 @@ If you encounter a user authentication error and the authentication hasn't chang
 
 .AddLink - Adds a link between two entity instances that already exist in database
 .AddRelatedObject - Adds a new related entity to an existing entity
+
+### References
+[Dataverse LINQ Queries](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/org-service/build-queries-with-linq-net-language-integrated-query)

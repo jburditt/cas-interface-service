@@ -10,8 +10,8 @@ public class RecoveryClaimRepositoryTests(IRecoveryClaimRepository repository)
         var query = new RecoveryClaimQuery
         {
             IncludeChildren = true,
-            Id = new Guid("1e06ea0a-7c91-ef11-b853-00505683fbf4")
-            //CodingBlockSubmissionStatus = CodingBlockSubmissionStatus.Submitted,
+            Id = new Guid("1e06ea0a-7c91-ef11-b853-00505683fbf4"),
+            CodingBlockSubmissionStatus = CodingBlockSubmissionStatus.Submitted,
             //AfterInvoiceDate = new DateTime(2023, 1, 1),
             //AfterDateGoodsReceived = new DateTime(2023, 1, 1),
             //AfterDateInvoiceReceived = new DateTime(2023, 1, 1)
