@@ -1,6 +1,4 @@
-﻿
-
-public class RecoveryClaimRepositoryTests(IRecoveryClaimRepository repository)
+﻿public class RecoveryClaimRepositoryTests(IRecoveryClaimRepository repository, ICasService casService, IMapper mapper)
 {
     // WARNING these are not valid unit tests and depend on data in Dynamics not changing, use for local testing purposes only
 
@@ -23,9 +21,16 @@ public class RecoveryClaimRepositoryTests(IRecoveryClaimRepository repository)
     }
 
     [Fact]
-    public void GetPending_Success()
+    public async Task GetPending_Success()
     {
         var recoveryClaims = repository.GetPending();
+
+        foreach (var recoveryClaim in recoveryClaims)
+        {
+            var invoice = mapper.Map<Invoice>(recoveryClaim);
+            //var httpResponse = await casService.CreateInvoice(invoice);
+
+        }
 
         // Assert
         Assert.NotNull(recoveryClaims);

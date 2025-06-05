@@ -70,5 +70,20 @@ public class RecoveryClaimMapper : Profile
             .ForMember(dest => dest.Code, opt => opt.MapFrom(src => src.EMCR_Code));
 
         CreateMap<SystemUser, User>();
+
+        CreateMap<RecoveryClaim, Invoice>()
+            .ForMember(dest => dest.GLDate, opt => opt.MapFrom(src => src.InvoiceDate))
+            .ForMember(dest => dest.QualifiedReceiver, opt => opt.MapFrom(src => src.QualifiedReceiver.FullName))
+            .ForMember(dest => dest.InvoiceBatchName, opt => opt.MapFrom(src => "EMCR DFA"))
+            .ForMember(dest => dest.PayGroup, opt => opt.MapFrom(src => src.PayGroup == null ? "GEN CHQ" : src.PayGroup.GetDescription()))
+            .ForMember(dest => dest.InvoiceLineDetails, opt => opt.MapFrom(src => new List<InvoiceLineDetail>
+            {
+                new InvoiceLineDetail
+                {
+                    InvoiceLineNumber = 1,
+                    InvoiceLineAmount = src.InvoiceAmount ?? 0,
+                    DefaultDistributionAccount = $"{src.ExpenseProject.Code}.{src.ClientCode.Code}.{src.ResponsibilityCentre.Code}.{src.Stob.Code}.{src.ServiceLine.Code}"
+                }
+            }));
     }
 }

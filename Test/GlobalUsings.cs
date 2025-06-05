@@ -1,4 +1,5 @@
 ﻿global using Api;
+global using AutoMapper;
 global using Database;
 global using Model;
 global using Microsoft.AspNetCore.Builder;
