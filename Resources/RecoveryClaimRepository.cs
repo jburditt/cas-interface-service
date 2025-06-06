@@ -4,6 +4,7 @@ public interface IRecoveryClaimRepository : IQueryRepository<RecoveryClaimQuery,
 {
     IEnumerable<RecoveryClaim> GetPending();
     bool UpdateCodingBlockSubmissionStatus(Guid id, CodingBlockSubmissionStatus submitted);
+    bool UpdateFailure(Guid id, string errorMessage);
 }
 
 public class RecoveryClaimRepository : BaseRepository<DFA_ProjectClaim, RecoveryClaim>, IRecoveryClaimRepository
@@ -15,6 +16,7 @@ public class RecoveryClaimRepository : BaseRepository<DFA_ProjectClaim, Recovery
         _databaseContext = databaseContext;
     }
 
+    // TODO using Query would be ideal but there are limitations with the LINQ where method that need to be overcome
     public IEnumerable<RecoveryClaim> GetPending()
     {
         var queryResults = (
@@ -58,6 +60,22 @@ public class RecoveryClaimRepository : BaseRepository<DFA_ProjectClaim, Recovery
         return _databaseContext
             .SaveChanges()
             .HasError;   
+    }
+
+    // TODO this should be generic and performance could be improved
+    public bool UpdateFailure(Guid id, string errorMessage)
+    {
+        var projectClaim = _databaseContext.DFA_ProjectClaimSet.FirstOrDefault(x => x.Id == id);
+        if (projectClaim == null)
+            return false;
+
+        projectClaim.DFA_CodingBlockSubmissionStatus = DFA_CodingBlockSubmissionStatus.Failed;
+        projectClaim.DFA_LastCodingBlockSubmissionError = errorMessage.Truncate(4000);
+        _databaseContext.UpdateObject(projectClaim);
+
+        return _databaseContext
+            .SaveChanges()
+            .HasError;
     }
 
     // TODO could not fully implement with "IncludeChildren", more research required

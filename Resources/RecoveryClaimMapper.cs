@@ -4,6 +4,7 @@ public class RecoveryClaimMapper : Profile
 {
     public RecoveryClaimMapper()
     {
+        // Keep these mappings in sync with the below
         CreateMap<DFA_ProjectClaim, RecoveryClaim>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.DFA_ProjectClaimId))
             .ForMember(dest => dest.ClientCodeKey, opt => opt.MapFrom(src => src.DFA_ClientCodeId))
@@ -22,10 +23,12 @@ public class RecoveryClaimMapper : Profile
             .ForMember(dest => dest.DateGoodsReceived, opt => opt.MapFrom(src => src.DFA_DateGoodsAndServicesReceived))
             .ForMember(dest => dest.DateInvoiceReceived, opt => opt.MapFrom(src => src.DFA_ClaimReceivedDate))
             .ForMember(dest => dest.QualifiedReceiverKey, opt => opt.MapFrom(src => src.DFA_QualifiedReceiver))
-            .ForMember(dest => dest.PaymentAdviceComments, opt => opt.MapFrom(src => src.DFA_PaymentAdviceComments));
+            .ForMember(dest => dest.PaymentAdviceComments, opt => opt.MapFrom(src => src.DFA_PaymentAdviceComments))
+            .ForMember(dest => dest.LastCodingBlockSubmissionError, opt => opt.MapFrom(src => src.DFA_LastCodingBlockSubmissionError));
 
+        // Keep these mappings in sync with the above
         CreateMap<ProjectClaimEntity, RecoveryClaim>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ProjectClaim.DFA_ProjectClaimId))
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ProjectClaim.Id))
             .ForMember(dest => dest.ClientCodeKey, opt => opt.MapFrom(src => src.ProjectClaim.DFA_ClientCodeId))
             .ForMember(dest => dest.ClientCode, opt => opt.MapFrom(src => src.ClientCode))
             .ForMember(dest => dest.ResponsibilityCentreKey, opt => opt.MapFrom(src => src.ProjectClaim.DFA_Resp))
@@ -47,7 +50,8 @@ public class RecoveryClaimMapper : Profile
             .ForMember(dest => dest.DateInvoiceReceived, opt => opt.MapFrom(src => src.ProjectClaim.DFA_ClaimReceivedDate))
             .ForMember(dest => dest.PaymentAdviceComments, opt => opt.MapFrom(src => src.ProjectClaim.DFA_PaymentAdviceComments))
             .ForMember(dest => dest.QualifiedReceiverKey, opt => opt.MapFrom(src => src.ProjectClaim.DFA_QualifiedReceiver))
-            .ForMember(dest => dest.QualifiedReceiver, opt => opt.MapFrom(src => src.QualifiedReceiver));
+            .ForMember(dest => dest.QualifiedReceiver, opt => opt.MapFrom(src => src.QualifiedReceiver))
+            .ForMember(dest => dest.LastCodingBlockSubmissionError, opt => opt.MapFrom(src => src.ProjectClaim.DFA_LastCodingBlockSubmissionError));
 
         CreateMap<EMCR_ResponsibilityCentre, ResponsibilityCentre>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.EMCR_ResponsibilityCentreId))
@@ -74,9 +78,11 @@ public class RecoveryClaimMapper : Profile
         CreateMap<RecoveryClaim, Invoice>()
             .ForMember(dest => dest.GLDate, opt => opt.MapFrom(src => src.InvoiceDate))
             .ForMember(dest => dest.QualifiedReceiver, opt => opt.MapFrom(src => src.QualifiedReceiver.FullName))
+            // below hard-coded values are specific to EMCR DFA, if you reuse the DynamicsController with other projects, move these hard-coded values from this mapping to DFA specific code or have DFA Dynamics supply these values
             .ForMember(dest => dest.InvoiceBatchName, opt => opt.MapFrom(src => "EMCR DFA"))
             .ForMember(dest => dest.PayGroup, opt => opt.MapFrom(src => src.PayGroup == null ? "GEN CHQ" : src.PayGroup.GetDescription()))
             .ForMember(dest => dest.Terms, opt => opt.MapFrom(src => "20 Days"))
+            // end of DFA hard-coded mappings
             .ForMember(dest => dest.InvoiceLineDetails, opt => opt.MapFrom(src => new List<InvoiceLineDetail>
             {
                 new InvoiceLineDetail

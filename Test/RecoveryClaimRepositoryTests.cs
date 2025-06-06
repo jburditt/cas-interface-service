@@ -46,4 +46,22 @@
         Assert.NotNull(updatedClaim);
         Assert.Equal(codingBlockSubmissionStatus, updatedClaim.CodingBlockSubmissionStatus);
     }
+
+    [Fact]
+    public void UpdateCodingBlockSubmissionFailure_Success()
+    {
+        // Arrange
+        var id = new Guid("3cc1c64d-3330-f011-b853-005056838fcd");
+        var errorMessage = "An error occurred while processing the request. Our system was unable to successfully perform the request via the API gateway and/or the OpenShift service. Please check the plugins trace logs for more details.";
+
+        // Act
+        repository.UpdateFailure(id, errorMessage);
+
+        // Assert
+        var updatedClaim = repository
+            .Query(new RecoveryClaimQuery { Id = id })
+            .FirstOrDefault();
+        Assert.NotNull(updatedClaim);
+        Assert.Equal(errorMessage, updatedClaim.LastCodingBlockSubmissionError);
+    }
 }

@@ -22,6 +22,7 @@ services.AddLogging(appSettings);
 services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
+services.AddBackgroundTaskQueue();
 services.AddDatabase(builder.Configuration);
 
 var app = builder.Build();

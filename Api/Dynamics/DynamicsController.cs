@@ -2,13 +2,15 @@
 
 [Route("api/[controller]")]
 [ApiController]
-public class DynamicsController(IRecoveryClaimService recoveryClaimService) : Controller
+public class DynamicsController(IRecoveryClaimService recoveryClaimService, IBackgroundTaskQueue taskQueue) : Controller
 {
     [HttpGet("process-claims")]
-    public async Task<IActionResult> ProcessClaims()
+    public IActionResult ProcessClaims()
     {
-        var claimResponses = await recoveryClaimService.ProcessClaims();
-        return Ok(claimResponses);
+        _ = taskQueue.QueueBackgroundWorkItemAsync(async job =>
+        {
+            await recoveryClaimService.ProcessClaims();
+        });
+        return Ok();
     }
-    
 }

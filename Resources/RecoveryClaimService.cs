@@ -22,11 +22,10 @@ public class RecoveryClaimService(IRecoveryClaimRepository repository, IMapper m
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     repository.UpdateCodingBlockSubmissionStatus(recoveryClaim.Id, CodingBlockSubmissionStatus.Submitted);
-
                 }
                 else
                 {
-                    repository.UpdateCodingBlockSubmissionStatus(recoveryClaim.Id, CodingBlockSubmissionStatus.Failed);
+                    repository.UpdateFailure(recoveryClaim.Id, response.Content);
                 }
                 claimResponses.Add(response);
             }

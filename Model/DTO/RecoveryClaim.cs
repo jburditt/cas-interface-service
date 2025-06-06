@@ -1,6 +1,6 @@
 ﻿namespace Model;
 
-public record RecoveryClaimQuery //: IRequest<IEnumerable<ProjectClaim>>
+public record RecoveryClaimQuery //: IRequest<IEnumerable<RecoveryClaim>>
 {
     public Guid? Id { get; set; }
     public bool IncludeChildren { get; set; }
@@ -16,6 +16,10 @@ public record RecoveryClaim : IDto
     public StateCode StateCode { get; set; }
 
     public CodingBlockSubmissionStatus? CodingBlockSubmissionStatus { get; set; }   // Dynamics Optional dfa_codingblocksubmissionstatus
+
+    [MaxLength(4000)]
+    public string? LastCodingBlockSubmissionError { get; set; } // Dynamics Optional dfa_lastcodingblocksubmissionerror
+
     public string? SupplierNumber { get; set; }  // Dynamics Optional dfa_suppliernumber
     [MaxLength(250)]
     public string? SupplierSiteNumber { get; set; } // Dynamics Optional dfa_site
