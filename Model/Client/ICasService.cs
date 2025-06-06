@@ -1,4 +1,4 @@
-﻿namespace Client;
+﻿namespace Model;
 
 public interface ICasService
 {
