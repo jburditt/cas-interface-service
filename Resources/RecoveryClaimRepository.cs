@@ -3,7 +3,7 @@
 public interface IRecoveryClaimRepository : IQueryRepository<RecoveryClaimQuery, RecoveryClaim>, IBaseRepository<RecoveryClaim>
 {
     IEnumerable<RecoveryClaim> GetPending();
-    void UpdateCodingBlockSubmissionStatus(Guid id, CodingBlockSubmissionStatus submitted);
+    bool UpdateCodingBlockSubmissionStatus(Guid id, CodingBlockSubmissionStatus submitted);
 }
 
 public class RecoveryClaimRepository : BaseRepository<DFA_ProjectClaim, RecoveryClaim>, IRecoveryClaimRepository
@@ -46,14 +46,18 @@ public class RecoveryClaimRepository : BaseRepository<DFA_ProjectClaim, Recovery
     }
 
     // TODO this should be generic and performance could be improved
-    public void UpdateCodingBlockSubmissionStatus(Guid id, CodingBlockSubmissionStatus codingBlockSubmissionStatus)
+    public bool UpdateCodingBlockSubmissionStatus(Guid id, CodingBlockSubmissionStatus codingBlockSubmissionStatus)
     {
         var projectClaim = _databaseContext.DFA_ProjectClaimSet.FirstOrDefault(x => x.Id == id);
-        if (projectClaim != null)
-        {
+        if (projectClaim == null)
+            return false;
+
             projectClaim.DFA_CodingBlockSubmissionStatus = (DFA_CodingBlockSubmissionStatus)codingBlockSubmissionStatus;
-            _databaseContext.SaveChanges();
-        }
+        _databaseContext.UpdateObject(projectClaim);
+
+        return _databaseContext
+            .SaveChanges()
+            .HasError;   
     }
 
     // TODO could not fully implement with "IncludeChildren", more research required
@@ -97,6 +101,7 @@ public static class RecoveryClaimRepositoryExtensions
     public static IQueryable<DFA_ProjectClaim> Where(this IQueryable<DFA_ProjectClaim> results, RecoveryClaimQuery query)
     {
         return results
+            .WhereIf(query.Id != null, x => x.Id == query.Id)
             .WhereIf(query.CodingBlockSubmissionStatus != null, x => x.DFA_CodingBlockSubmissionStatus == (DFA_CodingBlockSubmissionStatus?)query.CodingBlockSubmissionStatus)
             .WhereIf(query.AfterInvoiceDate != null, x => x.DFA_InvoiceDate >= query.AfterInvoiceDate)
             .WhereIf(query.AfterDateGoodsReceived != null, x => x.DFA_DateGoodsAndServicesReceived >= query.AfterDateGoodsReceived)

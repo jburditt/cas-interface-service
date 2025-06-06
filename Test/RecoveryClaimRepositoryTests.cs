@@ -23,23 +23,27 @@
     [Fact]
     public async Task GetPending_Success()
     {
-        var recoveryClaims = repository.GetPending();
-
-        foreach (var recoveryClaim in recoveryClaims)
-        {
-            var invoice = mapper.Map<Invoice>(recoveryClaim);
-            var response = await casService.CreateInvoice(invoice);
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                repository.UpdateCodingBlockSubmissionStatus(recoveryClaim.Id, CodingBlockSubmissionStatus.Submitted);
-            }
-            else
-            {
-                repository.UpdateCodingBlockSubmissionStatus(recoveryClaim.Id, CodingBlockSubmissionStatus.Failed);
-            }
-        }
+        var responses = await recoveryClaimService.ProcessClaims();
 
         // Assert
-        Assert.NotNull(recoveryClaims);
+        Assert.NotNull(responses);
+            }
+
+    [Fact]
+    public void UpdateCodingBlockSubmissionStatus_Success()
+            {
+        // Arrange
+        var id = new Guid("3cc1c64d-3330-f011-b853-005056838fcd");
+        var codingBlockSubmissionStatus = CodingBlockSubmissionStatus.Failed;
+
+        // Act
+        repository.UpdateCodingBlockSubmissionStatus(id, codingBlockSubmissionStatus);
+
+        // Assert
+        var updatedClaim = repository
+            .Query(new RecoveryClaimQuery { Id = id })
+            .FirstOrDefault();
+        Assert.NotNull(updatedClaim);
+        Assert.Equal(codingBlockSubmissionStatus, updatedClaim.CodingBlockSubmissionStatus);
     }
 }

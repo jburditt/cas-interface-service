@@ -21,7 +21,7 @@ public class RecoveryClaimMapper : Profile
             .ForMember(dest => dest.PayGroup, opt => opt.MapFrom(src => src.DFA_PayGroupType))
             .ForMember(dest => dest.DateGoodsReceived, opt => opt.MapFrom(src => src.DFA_DateGoodsAndServicesReceived))
             .ForMember(dest => dest.DateInvoiceReceived, opt => opt.MapFrom(src => src.DFA_ClaimReceivedDate))
-            .ForMember(dest => dest.QualifiedReceiver, opt => opt.MapFrom(src => src.DFA_QualifiedReceiver))
+            .ForMember(dest => dest.QualifiedReceiverKey, opt => opt.MapFrom(src => src.DFA_QualifiedReceiver))
             .ForMember(dest => dest.PaymentAdviceComments, opt => opt.MapFrom(src => src.DFA_PaymentAdviceComments));
 
         CreateMap<ProjectClaimEntity, RecoveryClaim>()
