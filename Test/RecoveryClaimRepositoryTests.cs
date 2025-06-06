@@ -1,4 +1,4 @@
-﻿public class RecoveryClaimRepositoryTests(IRecoveryClaimRepository repository, ICasService casService, IMapper mapper)
+﻿public class RecoveryClaimRepositoryTests(IRecoveryClaimRepository repository, IRecoveryClaimService recoveryClaimService, IMapper mapper)
 {
     // WARNING these are not valid unit tests and depend on data in Dynamics not changing, use for local testing purposes only
 
@@ -8,8 +8,8 @@
         var query = new RecoveryClaimQuery
         {
             IncludeChildren = true,
-            Id = new Guid("1e06ea0a-7c91-ef11-b853-00505683fbf4"),
-            CodingBlockSubmissionStatus = CodingBlockSubmissionStatus.PendingSubmission,
+            Id = new Guid("<guid>"),
+            //CodingBlockSubmissionStatus = CodingBlockSubmissionStatus.PendingSubmission,
             //AfterInvoiceDate = new DateTime(2023, 1, 1),
             //AfterDateGoodsReceived = new DateTime(2023, 1, 1),
             //AfterDateInvoiceReceived = new DateTime(2023, 1, 1)
@@ -27,13 +27,13 @@
 
         // Assert
         Assert.NotNull(responses);
-            }
+    }
 
     [Fact]
     public void UpdateCodingBlockSubmissionStatus_Success()
-            {
+    {
         // Arrange
-        var id = new Guid("3cc1c64d-3330-f011-b853-005056838fcd");
+        var id = new Guid("<guid>");
         var codingBlockSubmissionStatus = CodingBlockSubmissionStatus.Failed;
 
         // Act
@@ -51,7 +51,7 @@
     public void UpdateCodingBlockSubmissionFailure_Success()
     {
         // Arrange
-        var id = new Guid("3cc1c64d-3330-f011-b853-005056838fcd");
+        var id = new Guid("<guid>");
         var errorMessage = "An error occurred while processing the request. Our system was unable to successfully perform the request via the API gateway and/or the OpenShift service. Please check the plugins trace logs for more details.";
 
         // Act
