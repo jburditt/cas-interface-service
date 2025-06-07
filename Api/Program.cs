@@ -12,6 +12,8 @@ var env = builder.Environment;
 var appSettings = services.AddAppSettings(env);
 
 services.AddCasHttpClient(env.IsProduction());
+services.AddServices();
+services.AddAutoMapperMappings();
 services.AddCorsPolicy(builder.Configuration.GetSection("cors").Get<CorsSettings>());
 services.AddSsoAuthentication(appSettings.Configuration);
 services.AddSsoAuthorization();
@@ -20,6 +22,8 @@ services.AddLogging(appSettings);
 services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
+services.AddBackgroundTaskQueue();
+services.AddDatabase(builder.Configuration);
 
 var app = builder.Build();
 app.MapHealthChecks();
