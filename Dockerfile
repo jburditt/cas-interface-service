@@ -9,11 +9,7 @@ WORKDIR /app
 # Create build image for runtime
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
-COPY ./CASAdapter.sln .
-COPY ./Api ./Api
-COPY ./Client ./Client
-COPY ./Model ./Model
-COPY ./Test ./Test
+COPY . .
 
 # Build and publish a release
 RUN dotnet publish -c Release -o /app/publish
